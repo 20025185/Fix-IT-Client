@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "937557274056",
+    "firebase_url": "https://pagliu-db.firebaseio.com",
+    "project_id": "pagliu-db",
+    "storage_bucket": "pagliu-db.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:937557274056:android:4d097e37092d5f0f1f24fd",
+        "android_client_info": {
+          "package_name": "com.example.fix_it_pagliu"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "937557274056-d0mhj94a9d0ajn2g6boa5601bnpm4sma.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.fix_it_pagliu",
+            "certificate_hash": "39a9ae8dc4e797c22644753d299c76544c323a02"
+          }
+        },
+        {
+          "client_id": "937557274056-f8fh73hvvv1iqbpbaofsdh3pmm85aa3h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBxoRAKpyI3u9GPUvctqyDuzYWwoneOiEs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "937557274056-f8fh73hvvv1iqbpbaofsdh3pmm85aa3h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

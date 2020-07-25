@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Fix-IT-Pagliu</string>
+    <string name="confermapsw">Conferma Password</string>
+    <string name="confermareg">Conferma Registrazione</string>
+    <string name="email">e-Mail</string>
+    <string name="login">Login</string>
+    <string name="registrazione">Registrazione</string>
+</resources>
