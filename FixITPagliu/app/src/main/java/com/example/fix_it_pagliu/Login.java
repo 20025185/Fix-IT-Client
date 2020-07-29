@@ -59,6 +59,11 @@ public class Login extends AppCompatActivity {
         rootNode = FirebaseDatabase.getInstance();
         dbReference = rootNode.getReference("users");
 
+        if (fAuth.getCurrentUser() != null) {
+            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+            finish();
+        }
+
         m_employeeLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

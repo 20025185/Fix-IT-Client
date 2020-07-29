@@ -47,7 +47,6 @@ public class Register extends AppCompatActivity {
     TextView m_LoginBtn;
 
     DatePickerDialog.OnDateSetListener mDateSetListener;
-    ProgressBar m_progressBar;
 
     FirebaseDatabase database;
     DatabaseReference databaseReference;

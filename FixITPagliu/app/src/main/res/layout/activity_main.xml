@@ -9,37 +9,139 @@
     tools:context=".MainActivity"
     tools:openDrawer="start">
 
-
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/nav_view"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
         app:headerLayout="@layout/header"
-        app:menu="@menu/drawer_menu" />
+        app:menu="@menu/drawer_menu">
+
+
+    </com.google.android.material.navigation.NavigationView>
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#FFFFFF" />
+        android:background="#fff7f8" />
 
-    <ScrollView
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/mainText"
+            android:id="@+id/emailNotVerified"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="200dp"
-            android:text="main"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:text="Email is Not Verified"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="250dp"
+            />
+
+        <Button
+            android:id="@+id/resendCode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="250dp"
+            android:layout_marginTop="10dp"
+            android:layout_below="@id/emailNotVerified"
+            android:text="resend" />
+
+        <TextView
+            android:id="@+id/nomeText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="100dp"
+            android:text="Nome"
+            android:textColor="#808080" />
+
+        <TextView
+            android:id="@+id/nomeUser"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/nomeText"
+            android:layout_marginLeft="50dp"
+            android:text="null"
+            android:textColor="#000000" />
+
+        <TextView
+            android:id="@+id/emailText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/nomeUser"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="20dp"
+            android:text="e-mail"
+            android:textColor="#808080" />
+
+        <TextView
+            android:id="@+id/emailUser"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/emailText"
+            android:layout_marginLeft="50dp"
+            android:text="null@invalid.ptr"
+            android:textColor="#000000" />
+
+        <TextView
+            android:id="@+id/roleText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/emailUser"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="20dp"
+            android:text="Tipo"
+            android:textColor="#808080" />
+
+        <TextView
+            android:id="@+id/roleUser"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/roleText"
+            android:layout_marginLeft="50dp"
+            android:text="invalid"
+            android:textColor="#000000" />
+
+        <TextView
+            android:id="@+id/fiscalText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/roleText"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="40dp"
+            android:text="@string/codice_fiscale"
+            android:textColor="#808080" />
+
+        <TextView
+            android:id="@+id/fiscalUser"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/fiscalText"
+            android:layout_marginLeft="50dp"
+            android:text="invalid"
+            android:textColor="#000000" />
+
+        <TextView
+            android:id="@+id/birthdayText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/fiscalUser"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="20dp"
+            android:text="@string/data_di_nascita"
+            android:textColor="#808080" />
+
+        <TextView
+            android:id="@+id/birthdayUser"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/birthdayText"
+            android:layout_marginLeft="50dp"
+            android:text="DD/MM/YYYY"
+            android:textColor="#000000" />
 
 
-    </ScrollView>
+    </RelativeLayout>
 </androidx.drawerlayout.widget.DrawerLayout>

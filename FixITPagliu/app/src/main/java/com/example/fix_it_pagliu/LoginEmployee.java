@@ -29,14 +29,17 @@ import com.google.firebase.database.ValueEventListener;
 
 public class LoginEmployee extends AppCompatActivity {
     private final static String TAG = "[Login Impiegato] : ";
-    private EditText m_Email, m_Password;
-    private TextView m_forgotPsw, m_userLogin;
-    private Button m_LoginBtn;
-    private ProgressBar m_progressBar;
+
 
     private FirebaseAuth fAuth;
     private FirebaseDatabase rootNode;
     private DatabaseReference dbReference;
+
+    //  XML
+    private EditText m_Email, m_Password;
+    private TextView m_forgotPsw, m_userLogin;
+    private Button m_LoginBtn;
+    private ProgressBar m_progressBar;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -53,6 +56,18 @@ public class LoginEmployee extends AppCompatActivity {
         fAuth = FirebaseAuth.getInstance();
         rootNode = FirebaseDatabase.getInstance();
         dbReference = rootNode.getReference("users");
+
+        if (fAuth.getCurrentUser() != null) {
+            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+            finish();
+        }
+
+        m_userLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), Login.class));
+            }
+        });
 
         m_LoginBtn.setOnClickListener(new View.OnClickListener() {
             @Override

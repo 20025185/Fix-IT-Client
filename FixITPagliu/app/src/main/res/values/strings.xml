@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Fix-IT-Pagliu</string>
+    <string name="app_name"></string>
     <string name="confermapsw">Conferma Password</string>
     <string name="confermareg">Completa registrazione</string>
     <string name="email">e-Mail</string>
@@ -21,4 +21,6 @@
     <string name="lavori_per_noi">Lavori per noi?</string>
     <string name="password_dimenticata">Password dimenticata ?</string>
     <string name="login_utenti">Login utenti</string>
+    <string name="codice_fiscale">Codice Fiscale</string>
+    <string name="data_di_nascita">Data di nascita</string>
 </resources>

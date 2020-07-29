@@ -15,6 +15,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -39,29 +40,40 @@ import com.google.firebase.database.ValueEventListener;
 import org.w3c.dom.Text;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-    private FirebaseAuth fAuth;
+    private final static String TAG = "[MainActivity] : ";
+    //  Firebase
     private FirebaseDatabase rootNode;
     private DatabaseReference databaseReference;
-    private DatabaseReference userReference;
+    private FirebaseAuth fAuth;
     private FirebaseUser currentUser;
     private static String currentUid;
     private static String currentMail;
-    TextView verifyMsg;
-    Button resendCode;
 
+    //  XML
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
     private Toolbar toolbar;
     private Menu menu;
 
-    private final String TAG = "LOG>";
+    private TextView verifyMsg;
+    private Button resendCode;
+
+    private TextView nomeUser, emailUser,
+            roleUser, fiscalUser, birthdayUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //resendCode = findViewById(R.id.resendCode);
-        //verifyMsg = findViewById(R.id.emailNotVerified);
+
+        nomeUser = findViewById(R.id.nomeUser);
+        emailUser = findViewById(R.id.emailUser);
+        roleUser = findViewById(R.id.roleUser);
+        fiscalUser = findViewById(R.id.fiscalUser);
+        birthdayUser = findViewById(R.id.birthdayUser);
+
+        resendCode = findViewById(R.id.resendCode);
+        verifyMsg = findViewById(R.id.emailNotVerified);
 
         fAuth = FirebaseAuth.getInstance();
         rootNode = FirebaseDatabase.getInstance();
@@ -86,34 +98,28 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setCheckedItem(R.id.nav_profile);
 
 
-        //roleCheck();
-        /*if (roleCheck()) {
-            menu.findItem(R.id.nav_imp_panel).setVisible(true);
-        } else {
-            menu.findItem(R.id.nav_imp_panel).setVisible(false);
-        } */
-
         //  Email verification
-        /*if(!user.isEmailVerified()) {
+
+        if (!user.isEmailVerified()) {
             verifyMsg.setVisibility(View.VISIBLE);
             resendCode.setVisibility(View.VISIBLE);
             resendCode.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                final Task<Void> voidTask = user.sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                    Toast.makeText(MainActivity.this, "È stata inviata una e-Mail di verifica.", Toast.LENGTH_SHORT).show();
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                    Toast.makeText(MainActivity.this, "Errore nell'invio della e-Mail.", Toast.LENGTH_SHORT).show();
-                    }
-                });
+                    final Task<Void> voidTask = user.sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Toast.makeText(MainActivity.this, "È stata inviata una e-Mail di verifica.", Toast.LENGTH_SHORT).show();
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(MainActivity.this, "Errore nell'invio della e-Mail.", Toast.LENGTH_SHORT).show();
+                        }
+                    });
                 }
             });
-        }  */
+        }
 
     }
 
@@ -137,20 +143,27 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             logout();
 
         currentMail = currentUser.getEmail();
-        currentUid = currentUser.getUid();
-        userReference = databaseReference.child(currentUid);
-        menu = navigationView.getMenu();
+        emailUser.setText(currentMail);
 
+        currentUid = currentUser.getUid();
+
+        menu = navigationView.getMenu();
         ValueEventListener valueEventListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.child("role").getValue(String.class).equals("user")) {
                     menu.findItem(R.id.nav_imp_panel).setVisible(false);
                     menu.findItem(R.id.nav_menu_user).setVisible(true);
+                    roleUser.setText("Utente standard");
                 } else {
                     menu.findItem(R.id.nav_imp_panel).setVisible(true);
                     menu.findItem(R.id.nav_menu_user).setVisible(false);
+                    roleUser.setText("Impiegato");
                 }
+
+                nomeUser.setText(dataSnapshot.child("fullname").getValue(String.class) + " " + dataSnapshot.child("surname").getValue(String.class));
+                fiscalUser.setText(dataSnapshot.child("fiscalCode").getValue(String.class));
+                birthdayUser.setText(dataSnapshot.child("birthday").getValue(String.class));
             }
 
             @Override
@@ -158,14 +171,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 Log.d(TAG, databaseError.getMessage());
             }
         };
-        userReference.addListenerForSingleValueEvent(valueEventListener);
+        databaseReference.child(currentUid).addListenerForSingleValueEvent(valueEventListener);
 
-    }
-
-    public void logout() {
-        FirebaseAuth.getInstance().signOut();
-        startActivity(new Intent(getApplicationContext(), Login.class));
-        finish();
     }
 
     @Override
@@ -184,6 +191,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public void logout() {
+        FirebaseAuth.getInstance().signOut();
+        startActivity(new Intent(getApplicationContext(), Login.class));
+        finish();
     }
 
 }
