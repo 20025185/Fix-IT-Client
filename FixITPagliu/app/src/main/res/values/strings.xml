@@ -1,8 +1,24 @@
 <resources>
     <string name="app_name">Fix-IT-Pagliu</string>
     <string name="confermapsw">Conferma Password</string>
-    <string name="confermareg">Conferma Registrazione</string>
+    <string name="confermareg">Completa registrazione</string>
     <string name="email">e-Mail</string>
     <string name="login">Login</string>
     <string name="registrazione">Registrazione</string>
+    <string name="logout">LOGOUT</string>
+    <string name="verify">Verify</string>
+    <string name="email_non_verificata">Email non verificata</string>
+    <string name="invia_segnalazione">Invia segnalazione</string>
+
+    <string name="navigation_drawer_open">Open Navigation Drawer</string>
+    <string name="navigation_drawer_close">Close Navigation Drawer</string>
+    <string name="navi">Close</string>
+    <string name="ultime_notizie">Ultime notizie</string>
+    <string name="stato_segnalazione">Stato segnalazione</string>
+    <string name="statistiche">Statistiche</string>
+    <string name="gestione_segnalazioni">Gestione segnalazioni</string>
+    <string name="login_impiegato">Login Impiegato</string>
+    <string name="lavori_per_noi">Lavori per noi?</string>
+    <string name="password_dimenticata">Password dimenticata ?</string>
+    <string name="login_utenti">Login utenti</string>
 </resources>

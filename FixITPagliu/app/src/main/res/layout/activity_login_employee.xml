@@ -6,6 +6,16 @@
     android:layout_height="match_parent"
     tools:context=".Login">
 
+    <TextView
+        android:id="@+id/loginText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="65dp"
+        android:text="@string/login_impiegato"
+        android:textColor="#000000"
+        android:textSize="35dp" />
+
     <EditText
         android:id="@+id/emailLogin"
         android:layout_width="match_parent"
@@ -41,15 +51,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <TextView
-        android:id="@+id/loginText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="65dp"
-        android:text="@string/login"
-        android:textColor="#000000"
-        android:textSize="35dp" />
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -69,31 +70,24 @@
         android:layout_marginTop="75dp"
         android:text="Sign in" />
 
-    <Button
-        android:id="@+id/signupActBtn"
-        android:layout_width="150dp"
-        android:layout_height="50dp"
-        android:layout_below="@id/signinBtn"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
-        android:text="Signup" />
 
     <TextView
         android:id="@+id/forgotPsw"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/signupActBtn"
+        android:layout_below="@id/signinBtn"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:text="@string/password_dimenticata" />
 
     <TextView
-        android:id="@+id/employLogin"
+        android:id="@+id/usersLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/forgotPsw"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
-        android:text="@string/lavori_per_noi" />
+        android:text="@string/login_utenti" />
+
 
 </RelativeLayout>
