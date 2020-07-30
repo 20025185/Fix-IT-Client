@@ -8,13 +8,14 @@
     <string name="logout">LOGOUT</string>
     <string name="verify">Verify</string>
     <string name="email_non_verificata">Email non verificata</string>
-    <string name="invia_segnalazione">Invia segnalazione</string>
+    <string name="invia_segnalazione">Invio segnalazione</string>
 
     <string name="navigation_drawer_open">Open Navigation Drawer</string>
     <string name="navigation_drawer_close">Close Navigation Drawer</string>
     <string name="navi">Close</string>
     <string name="ultime_notizie">Ultime notizie</string>
     <string name="stato_segnalazione">Stato segnalazione</string>
+    <string name="statistiche_zona">Statistiche zona</string>
     <string name="statistiche">Statistiche</string>
     <string name="gestione_segnalazioni">Gestione segnalazioni</string>
     <string name="login_impiegato">Login Impiegato</string>
@@ -23,4 +24,5 @@
     <string name="login_utenti">Login utenti</string>
     <string name="codice_fiscale">Codice Fiscale</string>
     <string name="data_di_nascita">Data di nascita</string>
+    <string name="territorio">Territorio</string>
 </resources>

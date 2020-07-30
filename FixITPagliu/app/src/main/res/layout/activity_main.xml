@@ -34,19 +34,20 @@
             android:id="@+id/emailNotVerified"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Email is Not Verified"
-            android:layout_marginTop="20dp"
             android:layout_marginLeft="250dp"
-            />
+            android:layout_marginTop="20dp"
+            android:text="Email is Not Verified"
+            android:visibility="invisible" />
 
         <Button
             android:id="@+id/resendCode"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@id/emailNotVerified"
             android:layout_marginLeft="250dp"
             android:layout_marginTop="10dp"
-            android:layout_below="@id/emailNotVerified"
-            android:text="resend" />
+            android:text="resend"
+            android:visibility="invisible" />
 
         <TextView
             android:id="@+id/nomeText"

@@ -17,9 +17,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
+        <activity android:name=".user.LatestNews"/>
+        <activity android:name=".user.reports.SendReport"/>
         <activity android:name=".LoginEmployee" />
-        <activity android:name=".Register" />
+        <activity android:name=".user.Register" />
         <activity android:name=".MainActivity" />
     </application>
 

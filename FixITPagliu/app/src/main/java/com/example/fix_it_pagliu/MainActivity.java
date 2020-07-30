@@ -5,25 +5,21 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.navigation.NavController;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.PopupMenu;
+
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
 
-import com.example.fix_it_pagliu.database.User;
-import com.example.fix_it_pagliu.reports.SenderActivity;
+import com.example.fix_it_pagliu.user.reports.SendReport;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -34,10 +30,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-
-import org.w3c.dom.Text;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private final static String TAG = "[MainActivity] : ";
@@ -100,7 +93,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         //  Email verification
 
-        if (!user.isEmailVerified()) {
+        if (!user.isEmailVerified() && !roleUser.getText().equals("Impiegato")) {
             verifyMsg.setVisibility(View.VISIBLE);
             resendCode.setVisibility(View.VISIBLE);
             resendCode.setOnClickListener(new View.OnClickListener() {
@@ -181,7 +174,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.nav_profile:
                 break;
             case R.id.nav_sendReport:
-                Intent intent = new Intent(MainActivity.this, SenderActivity.class);
+                Intent intent = new Intent(MainActivity.this, SendReport.class);
                 startActivity(intent);
                 break;
             case R.id.nav_logout:
