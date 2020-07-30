@@ -88,6 +88,7 @@ public class Register extends AppCompatActivity {
                 m_Birthday.setText(day + "/" + month + "/" + year);
             }
         };
+
         m_RegisterBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

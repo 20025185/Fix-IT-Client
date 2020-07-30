@@ -25,4 +25,6 @@
     <string name="codice_fiscale">Codice Fiscale</string>
     <string name="data_di_nascita">Data di nascita</string>
     <string name="territorio">Territorio</string>
+    <string name="tipologia_segnalazione">Tipologia Segnalazione</string>
+    <string name="social">Social</string>
 </resources>

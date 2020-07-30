@@ -1,6 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <EditText
+        android:id="@+id/oggettoEdit"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:hint="Oggetto" />
+
+    <EditText
+        android:id="@+id/dataEdit"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/oggettoEdit"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="20dp"
+        android:focusable="false"
+        android:hint="Data" />
+
+    <EditText
+        android:id="@+id/timeEdit"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/oggettoEdit"
+        android:layout_alignRight="@+id/dataEdit"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="-200dp"
+        android:focusable="false"
+        android:hint="Orario" />
+
+    <EditText
+        android:id="@+id/placeEdit"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/dataEdit"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:focusable="false"
+        android:hint="Posizione" />
+
+    <EditText
+        android:id="@+id/descriptionEdit"
+        android:layout_width="350dp"
+        android:layout_height="250dp"
+        android:layout_below="@id/placeEdit"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:background="@android:color/darker_gray"
+        android:hint="Descrizione della problematica" />
+
+    <Button
+        android:id="@+id/typeButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/descriptionEdit"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="20dp"
+        android:background="@android:color/darker_gray"
+        android:onClick="showTipo"
+        android:text="@string/tipologia_segnalazione" />
+
+
+    <CheckBox
+        android:id="@+id/socialCheck"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/descriptionEdit"
+        android:layout_marginLeft="300dp"
+        android:layout_marginTop="30dp"
+        android:text="@string/social" />
+
+
+</RelativeLayout>
