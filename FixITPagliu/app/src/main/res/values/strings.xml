@@ -27,4 +27,11 @@
     <string name="territorio">Territorio</string>
     <string name="tipologia_segnalazione">Tipologia Segnalazione</string>
     <string name="social">Social</string>
+    <string name="descrizione_della_problematica">Descrizione della problematica</string>
+    <string name="tipo">Tipo</string>
+    <string name="oggetto">Oggetto</string>
+    <string name="data">Data</string>
+    <string name="orario">Orario</string>
+    <string name="posizione">Posizione</string>
+    <string name="allegato">Allegato</string>
 </resources>

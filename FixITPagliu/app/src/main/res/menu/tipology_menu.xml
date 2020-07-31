@@ -3,15 +3,15 @@
 
     <item
         android:id="@+id/item1"
-        android:title="Item 1" />
+        android:title="Problematica Stradale" />
     <item
         android:id="@+id/item2"
-        android:title="Item 2" />
+        android:title="Problematica di origine naturale" />
     <item
         android:id="@+id/item3"
-        android:title="Item 3" />
+        android:title="Attività sospette" />
     <item
         android:id="@+id/item4"
-        android:title="Item 4" />
+        android:title="Altro" />
 
 </menu>
