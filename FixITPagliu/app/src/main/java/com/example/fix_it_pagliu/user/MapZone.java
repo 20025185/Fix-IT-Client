@@ -2,6 +2,8 @@ package com.example.fix_it_pagliu.user;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
@@ -40,6 +42,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.database.core.Repo;
 
+import java.io.IOException;
+import java.util.List;
+
 import static com.google.android.gms.maps.model.BitmapDescriptorFactory.*;
 
 public class MapZone extends FragmentActivity implements OnMapReadyCallback {
@@ -49,10 +54,11 @@ public class MapZone extends FragmentActivity implements OnMapReadyCallback {
     private FusedLocationProviderClient fusedLocationProviderClient;
     private static final int REQUEST_CODE = 101;
 
-    private GoogleMap googleMap;
+    private GoogleMap map;
     private SupportMapFragment supportMapFragment;
 
-
+    private static LatLng favoritePlace;
+    private static boolean firstSession = true;
     //  XML
     private SearchView searchView;
 
@@ -60,28 +66,56 @@ public class MapZone extends FragmentActivity implements OnMapReadyCallback {
     private FirebaseDatabase database;
     private DatabaseReference databaseReference;
 
-    private Report[] reports;
+    private static Report[] reports;
     private int numberOfReports = 0;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
-
         retrieveData();
 
+
         searchView = findViewById(R.id.svLocation);
-        //supportMapFragment = findViewById(R.id.mapFrag);
+        supportMapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.mapFrag);
 
-        searchView.setOnClickListener(new View.OnClickListener() {
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
-            public void onClick(View view) {
+            public boolean onQueryTextSubmit(String s) {
+                String location = searchView.getQuery().toString();
+                List<Address> addressList = null;
 
+                if (!location.isEmpty()) {
+                    Geocoder geocoder = new Geocoder(MapZone.this);
+                    try {
+                        addressList = geocoder.getFromLocationName(location, 1);
+                    } catch (IOException e) {
+                        Toast.makeText(MapZone.this, e.toString(), Toast.LENGTH_SHORT).show();
+                    }
+
+                    if (!addressList.isEmpty()) {
+                        Address address = addressList.get(0);
+                        LatLng latLng = new LatLng(address.getLatitude(), address.getLongitude());
+                        favoritePlace = latLng;
+                        map.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10));
+                    } else {
+                        Toast.makeText(MapZone.this, "Cercare una località che sia valida o non ambigua.", Toast.LENGTH_SHORT).show();
+                    }
+                }
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                return false;
             }
         });
 
+        //supportMapFragment.getMapAsync(this);
+
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
         fetchLastLocation();
+
     }
 
     private void retrieveData() {
@@ -103,6 +137,7 @@ public class MapZone extends FragmentActivity implements OnMapReadyCallback {
                     reports[i] = new Report(position, priority, description, object);
                     ++i;
                 }
+
             }
 
             @Override
@@ -119,6 +154,7 @@ public class MapZone extends FragmentActivity implements OnMapReadyCallback {
                     {Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE);
             return;
         }
+
         Task<Location> task = fusedLocationProviderClient.getLastLocation();
         task.addOnSuccessListener(new OnSuccessListener<Location>() {
             @Override
@@ -136,31 +172,50 @@ public class MapZone extends FragmentActivity implements OnMapReadyCallback {
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        LatLng latLng = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
-        MarkerOptions markerOptions = new MarkerOptions().position(latLng).title("Sono qui");
-        googleMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
-        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
+        map = googleMap;
 
+        if (firstSession) {
+            loadPriorityMarkers(googleMap);
+
+            LatLng latLng = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
+            googleMap.addMarker(new MarkerOptions()
+                    .position(latLng)
+                    .title("Sono qui")
+                    .icon(BitmapDescriptorFactory.defaultMarker(HUE_MAGENTA)));
+
+            googleMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
+            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
+        }
+
+        /*
+        googleMap.animateCamera(CameraUpdateFactory.newLatLng(favoritePlace));
+        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(favoritePlace, 15));
+        */
+    }
+
+    private void loadPriorityMarkers(GoogleMap googleMap) {
         for (int i = 0; i < numberOfReports; ++i) {
             String[] coords = reports[i].getPosition().split(" ");
             LatLng latLng_t = new LatLng(Double.parseDouble(coords[0]), Double.parseDouble(coords[1]));
 
-            float markerColor = 0.0f;
+            float markerColor = HUE_RED;
 
             if (reports[i].getPriority().equals("0")) {
-                markerColor = 120.0f;
+                markerColor = HUE_GREEN;
             } else if (reports[i].getPriority().equals("1")) {
-                markerColor = 60.0f;
+                markerColor = HUE_YELLOW;
             } else if (reports[i].getPriority().equals("2")) {
-                markerColor = 0.0f;
+                markerColor = HUE_RED;
             }
 
-            Log.d(TAG, "priority " + reports[i].getPriority() + "colore" + markerColor);
+            Log.d(TAG, latLng_t.toString());
+
             googleMap.addMarker(new MarkerOptions().position(latLng_t)
                     .title(reports[i].getObject())
                     .snippet(reports[i].getDescription())
                     .icon(BitmapDescriptorFactory.defaultMarker(markerColor)));
         }
+        firstSession = false;
     }
 
     @Override
