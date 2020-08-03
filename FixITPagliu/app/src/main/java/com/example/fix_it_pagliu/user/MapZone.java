@@ -75,7 +75,6 @@ public class MapZone extends FragmentActivity implements OnMapReadyCallback {
         setContentView(R.layout.activity_map);
         retrieveData();
 
-
         searchView = findViewById(R.id.svLocation);
         supportMapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.mapFrag);
 
@@ -137,7 +136,6 @@ public class MapZone extends FragmentActivity implements OnMapReadyCallback {
                     reports[i] = new Report(position, priority, description, object);
                     ++i;
                 }
-
             }
 
             @Override
@@ -187,10 +185,10 @@ public class MapZone extends FragmentActivity implements OnMapReadyCallback {
             googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
         }
 
-        /*
+
         googleMap.animateCamera(CameraUpdateFactory.newLatLng(favoritePlace));
         googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(favoritePlace, 15));
-        */
+
     }
 
     private void loadPriorityMarkers(GoogleMap googleMap) {

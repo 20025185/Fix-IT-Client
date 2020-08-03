@@ -1,11 +1,9 @@
 package com.example.fix_it_pagliu.database;
 
-import android.media.Image;
-
-
 public class Report {
-    public Report(String uid, String object, String date, String time, String position, boolean social, String description, String type) {
+    public Report(String uid, String id, String object, String date, String time, String position, boolean social, String description, String type) {
         this.uid = uid;
+        this.id = id;
         this.object = object;
         this.date = date;
         this.time = time;
@@ -13,21 +11,35 @@ public class Report {
         this.social = social;
         this.description = description;
         this.type = type;
-        this.status = "Aperta";
+        this.status = "Aperta" + "_" + id;
         this.priority = "0";
     }
 
-    public Report(String position, String priority, String description) {
+    public Report(String id, String position, String priority, String description) {
+        this.id = id;
         this.position = position;
         this.priority = priority;
         this.description = description;
     }
 
-    public Report(String position, String priority, String description, String object) {
+    public Report(String id, String position, String priority, String description, String object) {
+        this.id = id;
         this.position = position;
         this.priority = priority;
         this.description = description;
         this.object = object;
+    }
+
+    public Report(String id, String position, String priority, String description, String object, String date, String time, String type, String status) {
+        this.id = id;
+        this.object = object;
+        this.date = date;
+        this.time = time;
+        this.position = position;
+        this.description = description;
+        this.type = type;
+        this.status = status;
+        this.priority = priority;
     }
 
     public String getUid() {
@@ -111,6 +123,12 @@ public class Report {
     }
 
     private String uid;
+
+    public String getId() {
+        return id;
+    }
+
+    private String id;
     private String object;
     private String date;
     private String time;
@@ -120,6 +138,7 @@ public class Report {
     private String type;
     private String status = "undefined";
     private String priority = "-1";
+
 
     //private Image img = new Image("C:\\Users\\Manuel\\Pictures\\Immagine.png");
 

@@ -1,29 +1,20 @@
 package com.example.fix_it_pagliu.user.reports;
 
-import android.Manifest;
-import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
-import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.location.Address;
-import android.location.Geocoder;
 import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -36,34 +27,17 @@ import androidx.core.app.ActivityCompat;
 import com.example.fix_it_pagliu.MainActivity;
 import com.example.fix_it_pagliu.R;
 import com.example.fix_it_pagliu.database.Report;
-import com.example.fix_it_pagliu.user.Register;
-import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
-import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.location.places.Place;
-import com.google.android.gms.location.places.ui.PlacePicker;
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.core.Repo;
 
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.List;
-import java.util.Locale;
 
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 
@@ -133,7 +107,7 @@ public class SendReport extends AppCompatActivity implements PopupMenu.OnMenuIte
         mDateSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, final int year, final int month, final int day) {
-                dateEdit.setText(day + "/" + month + "/" + year);
+                dateEdit.setText(year + "/" + month + "/" + day);
             }
         };
 
@@ -188,7 +162,7 @@ public class SendReport extends AppCompatActivity implements PopupMenu.OnMenuIte
         if (checkCampi()) {
             String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
             String repId = rootNode.getReference("reports").push().getKey();
-            Report report = new Report(uid, objectEdit.getText().toString(), dateEdit.getText().toString(),
+            Report report = new Report(uid, repId, objectEdit.getText().toString(), dateEdit.getText().toString(),
                     timeEdit.getText().toString(), placeEdit.getText().toString(),
                     socialDiffusion, descriptionEdit.getText().toString(), tipoSegnalazione);
 

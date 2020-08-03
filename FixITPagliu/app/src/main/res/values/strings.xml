@@ -9,12 +9,11 @@
     <string name="verify">Verify</string>
     <string name="email_non_verificata">Email non verificata</string>
     <string name="invia_segnalazione">Invio segnalazione</string>
-
     <string name="navigation_drawer_open">Open Navigation Drawer</string>
     <string name="navigation_drawer_close">Close Navigation Drawer</string>
     <string name="navi">Close</string>
     <string name="ultime_notizie">Ultime notizie</string>
-    <string name="stato_segnalazione">Stato segnalazione</string>
+    <string name="stato_segnalazione">Stato segnalazioni</string>
     <string name="statistiche_zona">Statistiche zona</string>
     <string name="statistiche">Statistiche</string>
     <string name="gestione_segnalazioni">Gestione segnalazioni</string>
@@ -28,10 +27,31 @@
     <string name="tipologia_segnalazione">Tipologia Segnalazione</string>
     <string name="social">Social</string>
     <string name="descrizione_della_problematica">Descrizione della problematica</string>
-    <string name="tipo">Tipo</string>
     <string name="oggetto">Oggetto</string>
     <string name="data">Data</string>
     <string name="orario">Orario</string>
     <string name="posizione">Posizione</string>
     <string name="allegato">Allegato</string>
+    <string name="missing_object">Missing_Object</string>
+    <string name="missing_description">Missing_Description</string>
+    <string name="missing_date">Missing Date</string>
+    <string name="l_e_mail_non_verificata">L\'e-mail non è verificata</string>
+    <string name="resend">resend</string>
+    <string name="nome">Nome</string>
+    <string name="nullStr">null</string>
+    <string name="e_mail">e-mail</string>
+    <string name="null_invalid_ptr">null@invalid.ptr</string>
+    <string name="tipo">Tipo</string>
+    <string name="invalid">invalid</string>
+    <string name="dd_mm_yyyy">DD/MM/YYYY</string>
+    <string name="pannello_di_controllo">Pannello di controllo</string>
+    <string name="blank" />
+    <string name="segnalazioni">Segnalazioni</string>
+    <string name="profile">Profile</string>
+    <string name="logout_nav">Logout</string>
+    <string name="stato_segnalazioni">Stato segnalazioni</string>
+    <string name="segnalazioni_aperte">Segnalazioni aperte</string>
+    <string name="segnalazioni_chiuse">Segnalazioni chiuse</string>
+    <string name="tools">Tools</string>
+    <string name="missing_id">Missing_ID</string>
 </resources>

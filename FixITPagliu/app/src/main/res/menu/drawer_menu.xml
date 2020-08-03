@@ -5,26 +5,24 @@
         <item
             android:id="@+id/nav_profile"
             android:icon="@drawable/ic_profile"
-            android:title="Profile" />
+            android:title="@string/profile" />
     </group>
 
     <item
         android:id="@+id/nav_menu_user"
-        android:title="Segnalazioni">
+        android:title="@string/tools">
         <menu>
             <group android:checkableBehavior="single">
                 <item
                     android:id="@+id/nav_sendReport"
                     android:icon="@drawable/ic_report"
                     android:title="@string/invia_segnalazione" />
-                <item
-                    android:id="@+id/nav_statoReport"
-                    android:icon="@drawable/ic_status"
-                    android:title="@string/stato_segnalazione" />
+
                 <item
                     android:id="@+id/nav_statsreport"
                     android:icon="@drawable/ic_stats"
                     android:title="@string/statistiche_zona" />
+
                 <item
                     android:id="@+id/nav_mapReports"
                     android:icon="@drawable/ic_map"
@@ -33,13 +31,27 @@
                     android:id="@+id/nav_news"
                     android:icon="@drawable/ic_news"
                     android:title="@string/ultime_notizie" />
+
+                <item android:title="@string/stato_segnalazioni">
+                    <menu></menu>
+                </item>
+
+                <item
+                    android:id="@+id/nav_segnAperte"
+                    android:icon="@drawable/ic_segnalazioni_aperte"
+                    android:title="@string/segnalazioni_aperte" />
+                <item
+                    android:id="@+id/nav_segnChiuse"
+                    android:icon="@drawable/ic_segnalazioni_chiuse"
+                    android:title="@string/segnalazioni_chiuse" />
+
             </group>
         </menu>
     </item>
 
     <item
         android:id="@+id/nav_imp_panel"
-        android:title="Pannello di controllo">
+        android:title="@string/pannello_di_controllo">
         <menu>
             <group android:checkableBehavior="single">
                 <item
@@ -58,15 +70,14 @@
         </menu>
     </item>
 
-    <item android:title=" ">
+    <item android:title="@string/blank">
         <menu>
             <group android:checkableBehavior="single">
                 <item
                     android:id="@+id/nav_logout"
                     android:icon="@drawable/ic_logout"
-                    android:title="Logout" />
+                    android:title="@string/logout_nav" />
             </group>
-
         </menu>
     </item>
 

@@ -19,8 +19,10 @@ import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
 
-import com.example.fix_it_pagliu.user.LatestNews;
+
 import com.example.fix_it_pagliu.user.MapZone;
+import com.example.fix_it_pagliu.user.reports.OpenReports;
+import com.example.fix_it_pagliu.user.news.PostListActivity;
 import com.example.fix_it_pagliu.user.reports.SendReport;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -172,9 +174,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+        Intent intent;
         switch (menuItem.getItemId()) {
             case R.id.nav_profile:
                 break;
+
             case R.id.nav_sendReport:
                 if (currentUser.isEmailVerified()) {
                     startActivity(new Intent(MainActivity.this, SendReport.class));
@@ -182,15 +186,31 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     Toast.makeText(MainActivity.this, "Devi attivare l'account tramite e-mail per accedere a questo servizio.", Toast.LENGTH_SHORT).show();
                 }
                 break;
+
             case R.id.nav_news:
-                startActivity(new Intent(MainActivity.this, LatestNews.class));
+                startActivity(new Intent(MainActivity.this, PostListActivity.class));
                 break;
+
             case R.id.nav_mapReports:
                 startActivity(new Intent(MainActivity.this, MapZone.class));
                 break;
+
+            case R.id.nav_segnAperte:
+                intent = new Intent(MainActivity.this, OpenReports.class);
+                intent.putExtra("UID", currentUser.getUid());
+                startActivity(intent);
+                break;
+
+            case R.id.nav_segnChiuse:
+                intent = new Intent(MainActivity.this, ClosedReports.class);
+                intent.putExtra("UID", currentUser.getUid());
+                startActivity(intent);
+                break;
+
             case R.id.nav_logout:
                 logout();
                 break;
+
         }
 
         drawerLayout.closeDrawer(GravityCompat.START);

@@ -16,8 +16,6 @@
         android:layout_gravity="start"
         app:headerLayout="@layout/header"
         app:menu="@menu/drawer_menu">
-
-
     </com.google.android.material.navigation.NavigationView>
 
     <androidx.appcompat.widget.Toolbar
@@ -34,9 +32,10 @@
             android:id="@+id/emailNotVerified"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="250dp"
             android:layout_marginLeft="250dp"
             android:layout_marginTop="20dp"
-            android:text="Email is Not Verified"
+            android:text="@string/l_e_mail_non_verificata"
             android:visibility="invisible" />
 
         <Button
@@ -44,18 +43,20 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/emailNotVerified"
+            android:layout_marginStart="250dp"
             android:layout_marginLeft="250dp"
             android:layout_marginTop="10dp"
-            android:text="resend"
+            android:text="@string/resend"
             android:visibility="invisible" />
 
         <TextView
             android:id="@+id/nomeText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="50dp"
             android:layout_marginLeft="50dp"
             android:layout_marginTop="100dp"
-            android:text="Nome"
+            android:text="@string/nome"
             android:textColor="#808080" />
 
         <TextView
@@ -63,8 +64,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/nomeText"
+            android:layout_marginStart="50dp"
             android:layout_marginLeft="50dp"
-            android:text="null"
+            android:text="@string/nullStr"
             android:textColor="#000000" />
 
         <TextView
@@ -72,9 +74,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/nomeUser"
+            android:layout_marginStart="50dp"
             android:layout_marginLeft="50dp"
             android:layout_marginTop="20dp"
-            android:text="e-mail"
+            android:text="@string/e_mail"
             android:textColor="#808080" />
 
         <TextView
@@ -82,8 +85,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/emailText"
+            android:layout_marginStart="50dp"
             android:layout_marginLeft="50dp"
-            android:text="null@invalid.ptr"
+            android:text="@string/null_invalid_ptr"
             android:textColor="#000000" />
 
         <TextView
@@ -91,9 +95,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/emailUser"
+            android:layout_marginStart="50dp"
             android:layout_marginLeft="50dp"
             android:layout_marginTop="20dp"
-            android:text="Tipo"
+            android:text="@string/tipo"
             android:textColor="#808080" />
 
         <TextView
@@ -101,8 +106,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/roleText"
+            android:layout_marginStart="50dp"
             android:layout_marginLeft="50dp"
-            android:text="invalid"
+            android:text="@string/invalid"
             android:textColor="#000000" />
 
         <TextView
@@ -110,6 +116,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/roleText"
+            android:layout_marginStart="50dp"
             android:layout_marginLeft="50dp"
             android:layout_marginTop="40dp"
             android:text="@string/codice_fiscale"
@@ -120,8 +127,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/fiscalText"
+            android:layout_marginStart="50dp"
             android:layout_marginLeft="50dp"
-            android:text="invalid"
+            android:text="@string/invalid"
             android:textColor="#000000" />
 
         <TextView
@@ -129,6 +137,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/fiscalUser"
+            android:layout_marginStart="50dp"
             android:layout_marginLeft="50dp"
             android:layout_marginTop="20dp"
             android:text="@string/data_di_nascita"
@@ -139,10 +148,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/birthdayText"
+            android:layout_marginStart="50dp"
             android:layout_marginLeft="50dp"
-            android:text="DD/MM/YYYY"
+            android:text="@string/dd_mm_yyyy"
             android:textColor="#000000" />
-
 
     </RelativeLayout>
 </androidx.drawerlayout.widget.DrawerLayout>
