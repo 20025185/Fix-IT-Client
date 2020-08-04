@@ -32,6 +32,7 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".user.reports.ClosedReports" />
         <activity android:name=".user.reports.OpenReports" />
         <activity android:name=".user.news.PostListActivity" />
         <activity android:name=".user.MapZone" />

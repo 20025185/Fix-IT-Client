@@ -21,6 +21,7 @@ import androidx.appcompat.widget.Toolbar;
 
 
 import com.example.fix_it_pagliu.user.MapZone;
+import com.example.fix_it_pagliu.user.reports.ClosedReports;
 import com.example.fix_it_pagliu.user.reports.OpenReports;
 import com.example.fix_it_pagliu.user.news.PostListActivity;
 import com.example.fix_it_pagliu.user.reports.SendReport;
