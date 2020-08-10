@@ -54,4 +54,9 @@
     <string name="segnalazioni_chiuse">Segnalazioni chiuse</string>
     <string name="tools">Tools</string>
     <string name="missing_id">Missing_ID</string>
+    <string name="vote">Vote</string>
+    <string name="missing_desc">Missing_desc</string>
+    <string name="scrivi_qualcosa">Scrivi qualcosa...</string>
+    <string name="invia">Invia</string>
+    <string name="date">date</string>
 </resources>

@@ -1,6 +1,7 @@
 package com.example.fix_it_pagliu.user.reports;
 
 import android.os.Bundle;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,6 +17,7 @@ import com.google.firebase.database.Query;
 public class OpenReports extends AppCompatActivity {
     OpenReportAdapter oOpenReportAdapter;
     RecyclerView recyclerView;
+    String openable = null;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -41,13 +43,19 @@ public class OpenReports extends AppCompatActivity {
 
         FirebaseRecyclerOptions<OReport> options =
                 new FirebaseRecyclerOptions.Builder<OReport>()
-                        .setQuery((Query) FirebaseDatabase.getInstance().getReference().child("reports").orderByChild("status").equalTo("Aperta_" + userID), OReport.class)
+                        .setQuery((Query) FirebaseDatabase.getInstance().getReference().child("reports")
+                                .orderByChild("status").equalTo("Aperta_" + userID), OReport.class)
                         .build();
 
         oOpenReportAdapter = new OpenReportAdapter(options);
+        oOpenReportAdapter.setInstance(getBaseContext());
 
         recyclerView.setAdapter(oOpenReportAdapter);
+
+        if (openable != null)
+            Toast.makeText(this, openable, Toast.LENGTH_SHORT).show();
     }
+
 
     @Override
     protected void onStart() {
@@ -55,10 +63,12 @@ public class OpenReports extends AppCompatActivity {
         oOpenReportAdapter.startListening();
     }
 
+
     @Override
     protected void onStop() {
         super.onStop();
         oOpenReportAdapter.stopListening();
     }
+
 
 }

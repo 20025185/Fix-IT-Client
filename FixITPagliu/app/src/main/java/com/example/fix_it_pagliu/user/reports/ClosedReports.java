@@ -13,15 +13,15 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 
 public class ClosedReports extends AppCompatActivity {
-    OpenReportAdapter oOpenReportAdapter;
+    ClosedReportAdapter oOpenReportAdapter;
     RecyclerView recyclerView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_open_reports);
+        setContentView(R.layout.activity_closed_reports);
 
-        recyclerView = findViewById(R.id.recyclerOpenReports);
+        recyclerView = findViewById(R.id.recyclerClosedReports);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setReverseLayout(true);
@@ -43,7 +43,7 @@ public class ClosedReports extends AppCompatActivity {
                         .setQuery((Query) FirebaseDatabase.getInstance().getReference().child("reports").orderByChild("status").equalTo("Chiusa_" + userID), OReport.class)
                         .build();
 
-        oOpenReportAdapter = new OpenReportAdapter(options);
+        oOpenReportAdapter = new ClosedReportAdapter(options);
 
         recyclerView.setAdapter(oOpenReportAdapter);
     }
