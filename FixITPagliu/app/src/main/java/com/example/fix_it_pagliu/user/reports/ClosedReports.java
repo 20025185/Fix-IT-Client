@@ -13,7 +13,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 
 public class ClosedReports extends AppCompatActivity {
-    ClosedReportAdapter oOpenReportAdapter;
+    ClosedReportAdapter closedReportAdapter;
     RecyclerView recyclerView;
 
     @Override
@@ -43,20 +43,21 @@ public class ClosedReports extends AppCompatActivity {
                         .setQuery((Query) FirebaseDatabase.getInstance().getReference().child("reports").orderByChild("status").equalTo("Chiusa_" + userID), OReport.class)
                         .build();
 
-        oOpenReportAdapter = new ClosedReportAdapter(options);
+        closedReportAdapter = new ClosedReportAdapter(options);
+        closedReportAdapter.setInstance(getBaseContext());
 
-        recyclerView.setAdapter(oOpenReportAdapter);
+        recyclerView.setAdapter(closedReportAdapter);
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        oOpenReportAdapter.startListening();
+        closedReportAdapter.startListening();
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        oOpenReportAdapter.stopListening();
+        closedReportAdapter.stopListening();
     }
 }

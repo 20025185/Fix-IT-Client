@@ -59,4 +59,6 @@
     <string name="scrivi_qualcosa">Scrivi qualcosa...</string>
     <string name="invia">Invia</string>
     <string name="date">date</string>
+    <string name="inserisci_la_motivazione_per_la_riapertura">Inserisci la motivazione per la riapertura (è possibile effettaure una sola richiesta di riapertura).</string>
+    <string name="richiedi_riapertura_segnalazione">Richiedi riapertura segnalazione</string>
 </resources>

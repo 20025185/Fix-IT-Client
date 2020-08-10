@@ -36,6 +36,7 @@
         <activity android:name=".user.reports.forum.BidirectionalForum" />
         <activity android:name=".user.reports.OpenReports" />
         <activity android:name=".user.news.PostListActivity" />
+        <activity android:name=".user.reports.ReopenReport" />
         <activity android:name=".user.MapZone" />
         <activity android:name=".user.reports.SendReport" />
         <activity android:name=".LoginEmployee" />
