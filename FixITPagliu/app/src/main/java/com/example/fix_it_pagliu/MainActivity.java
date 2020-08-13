@@ -207,7 +207,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 intent.putExtra("UID", currentUser.getUid());
                 startActivity(intent);
                 break;
-
+            case R.id.nav_statsreport:
+                intent = new Intent(MainActivity.this, StatsReports.class);
+                intent.putExtra("UID", currentUser.getUid());
+                startActivity(intent);
+                break;
             case R.id.nav_logout:
                 logout();
                 break;

@@ -35,11 +35,20 @@ public class ClosedReportAdapter extends FirebaseRecyclerAdapter<OReport, Closed
         holder.repDate.setText(report.getDate());
         holder.repDesc.setText(report.getDescription());
 
-
         holder.repButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(oldInstance, ReopenReport.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.putExtra("REP_ID", report.getId());
+                oldInstance.startActivities(new Intent[]{intent});
+            }
+        });
+
+        holder.repVote.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(oldInstance, Vote.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 intent.putExtra("REP_ID", report.getId());
                 oldInstance.startActivities(new Intent[]{intent});
@@ -58,7 +67,7 @@ public class ClosedReportAdapter extends FirebaseRecyclerAdapter<OReport, Closed
 
     static class ReportViewHolder extends RecyclerView.ViewHolder {
         TextView repObj, repID, repDate, repDesc;
-        Button repButton;
+        Button repButton, repVote;
 
         public ReportViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -68,6 +77,7 @@ public class ClosedReportAdapter extends FirebaseRecyclerAdapter<OReport, Closed
             repDate = itemView.findViewById(R.id.repDate);
             repDesc = itemView.findViewById(R.id.repDesc);
             repButton = itemView.findViewById(R.id.repReopen);
+            repVote = itemView.findViewById(R.id.repVote);
 
         }
     }

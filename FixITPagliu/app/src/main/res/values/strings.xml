@@ -61,4 +61,9 @@
     <string name="date">date</string>
     <string name="inserisci_la_motivazione_per_la_riapertura">Inserisci la motivazione per la riapertura (è possibile effettaure una sola richiesta di riapertura).</string>
     <string name="richiedi_riapertura_segnalazione">Richiedi riapertura segnalazione</string>
+    <string name="la_segnalazione_stata_risolta_in_maniera_soddisfacente">La segnalazione è stata risolta in maniera soddisfacente?</string>
+    <string name="invia_voto">Invia voto</string>
+    <string name="grazie_per_averci_fornito_il_tuo_feedback">Grazie per averci fornito il tuo feedback!</string>
+    <string name="localit">Località</string>
+    <string name="inserisci_localit">Inserisci località</string>
 </resources>
