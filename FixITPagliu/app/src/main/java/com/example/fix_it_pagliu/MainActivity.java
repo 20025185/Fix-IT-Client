@@ -20,7 +20,9 @@ import android.widget.Toast;
 import androidx.appcompat.widget.Toolbar;
 
 
-import com.example.fix_it_pagliu.user.MapZone;
+import com.example.fix_it_pagliu.user.auth.Login;
+import com.example.fix_it_pagliu.user.map_and_stats.MapZone;
+import com.example.fix_it_pagliu.user.map_and_stats.StatsReports;
 import com.example.fix_it_pagliu.user.reports.ClosedReports;
 import com.example.fix_it_pagliu.user.reports.OpenReports;
 import com.example.fix_it_pagliu.user.news.PostListActivity;

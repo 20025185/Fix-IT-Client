@@ -15,6 +15,23 @@ public class Report {
         this.priority = "0";
     }
 
+    @Override
+    public String toString() {
+        return "Report{" +
+                "uid='" + uid + '\'' +
+                ", id='" + id + '\'' +
+                ", object='" + object + '\'' +
+                ", date='" + date + '\'' +
+                ", time='" + time + '\'' +
+                ", position='" + position + '\'' +
+                ", social=" + social +
+                ", description='" + description + '\'' +
+                ", type='" + type + '\'' +
+                ", status='" + status + '\'' +
+                ", priority='" + priority + '\'' +
+                '}';
+    }
+
     public Report(String id, String position, String priority, String description) {
         this.id = id;
         this.position = position;

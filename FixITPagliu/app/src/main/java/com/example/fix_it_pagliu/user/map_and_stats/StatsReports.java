@@ -1,4 +1,4 @@
-package com.example.fix_it_pagliu;
+package com.example.fix_it_pagliu.user.map_and_stats;
 
 import android.location.Address;
 import android.location.Geocoder;
@@ -7,35 +7,25 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.SearchView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.fix_it_pagliu.user.PointValue;
-import com.google.firebase.auth.FirebaseAuth;
+import com.example.fix_it_pagliu.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.database.core.utilities.Tree;
 import com.jjoe64.graphview.DefaultLabelFormatter;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.TreeMap;
 
 public class StatsReports extends AppCompatActivity {
@@ -53,7 +43,6 @@ public class StatsReports extends AppCompatActivity {
 
     //  Analytics
     private TreeMap<String, Integer> data;
-    private PointValue[] points;
     private String[] keySet;
 
     @Override

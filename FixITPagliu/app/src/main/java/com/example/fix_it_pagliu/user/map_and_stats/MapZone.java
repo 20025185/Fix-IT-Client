@@ -1,4 +1,4 @@
-package com.example.fix_it_pagliu.user;
+package com.example.fix_it_pagliu.user.map_and_stats;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
@@ -6,16 +6,11 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.SearchView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentActivity;
 
@@ -27,20 +22,16 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.database.core.Repo;
 
 import java.io.IOException;
 import java.util.List;
@@ -48,7 +39,6 @@ import java.util.List;
 import static com.google.android.gms.maps.model.BitmapDescriptorFactory.*;
 
 public class MapZone extends FragmentActivity implements OnMapReadyCallback {
-
     private final String TAG = "[MapZone] : ";
     private Location currentLocation;
     private FusedLocationProviderClient fusedLocationProviderClient;
@@ -67,16 +57,18 @@ public class MapZone extends FragmentActivity implements OnMapReadyCallback {
     private DatabaseReference databaseReference;
 
     private static Report[] reports;
-    private int numberOfReports = 0;
+    private static int numberOfReports = 0;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
-        retrieveData();
 
         searchView = findViewById(R.id.svLocation);
         supportMapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.mapFrag);
+
+        if (firstSession)
+            retrieveData();
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -110,11 +102,8 @@ public class MapZone extends FragmentActivity implements OnMapReadyCallback {
             }
         });
 
-        //supportMapFragment.getMapAsync(this);
-
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
         fetchLastLocation();
-
     }
 
     private void retrieveData() {
@@ -129,11 +118,12 @@ public class MapZone extends FragmentActivity implements OnMapReadyCallback {
                 int i = 0;
 
                 for (DataSnapshot ds : snapshot.getChildren()) {
+                    String id = ds.child("id").getValue().toString();
                     String position = ds.child("position").getValue().toString();
                     String priority = ds.child("priority").getValue().toString();
-                    String object = ds.child("object").getValue().toString();
                     String description = ds.child("description").getValue().toString();
-                    reports[i] = new Report(position, priority, description, object);
+                    String object = ds.child("object").getValue().toString();
+                    reports[i] = new Report(id, position, priority, description, object);
                     ++i;
                 }
             }
@@ -147,7 +137,10 @@ public class MapZone extends FragmentActivity implements OnMapReadyCallback {
     }
 
     private void fetchLastLocation() {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]
                     {Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE);
             return;
@@ -159,7 +152,8 @@ public class MapZone extends FragmentActivity implements OnMapReadyCallback {
             public void onSuccess(Location location) {
                 if (location != null) {
                     currentLocation = location;
-                    Toast.makeText(getApplicationContext(), currentLocation.getLatitude() + " " +
+                    Toast.makeText(getApplicationContext(), currentLocation.getLatitude()
+                            + " " +
                             currentLocation.getLongitude(), Toast.LENGTH_SHORT).show();
                     SupportMapFragment supportMapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.mapFrag);
                     supportMapFragment.getMapAsync(MapZone.this);
@@ -183,11 +177,12 @@ public class MapZone extends FragmentActivity implements OnMapReadyCallback {
 
             googleMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
             googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
+        } else {
+            retrieveData();
+            loadPriorityMarkers(googleMap);
+            googleMap.animateCamera(CameraUpdateFactory.newLatLng(favoritePlace));
+            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(favoritePlace, 15));
         }
-
-
-        googleMap.animateCamera(CameraUpdateFactory.newLatLng(favoritePlace));
-        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(favoritePlace, 15));
 
     }
 
@@ -195,7 +190,6 @@ public class MapZone extends FragmentActivity implements OnMapReadyCallback {
         for (int i = 0; i < numberOfReports; ++i) {
             String[] coords = reports[i].getPosition().split(" ");
             LatLng latLng_t = new LatLng(Double.parseDouble(coords[0]), Double.parseDouble(coords[1]));
-
             float markerColor = HUE_RED;
 
             if (reports[i].getPriority().equals("0")) {
@@ -205,9 +199,6 @@ public class MapZone extends FragmentActivity implements OnMapReadyCallback {
             } else if (reports[i].getPriority().equals("2")) {
                 markerColor = HUE_RED;
             }
-
-            Log.d(TAG, latLng_t.toString());
-
             googleMap.addMarker(new MarkerOptions().position(latLng_t)
                     .title(reports[i].getObject())
                     .snippet(reports[i].getDescription())

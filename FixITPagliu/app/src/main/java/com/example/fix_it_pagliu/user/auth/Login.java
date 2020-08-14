@@ -1,4 +1,4 @@
-package com.example.fix_it_pagliu;
+package com.example.fix_it_pagliu.user.auth;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -16,7 +16,9 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.fix_it_pagliu.user.Register;
+import com.example.fix_it_pagliu.employee.LoginEmployee;
+import com.example.fix_it_pagliu.MainActivity;
+import com.example.fix_it_pagliu.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;

@@ -1,4 +1,4 @@
-package com.example.fix_it_pagliu.user;
+package com.example.fix_it_pagliu.user.auth;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,7 +16,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.fix_it_pagliu.Login;
 import com.example.fix_it_pagliu.MainActivity;
 import com.example.fix_it_pagliu.R;
 import com.example.fix_it_pagliu.database.User;

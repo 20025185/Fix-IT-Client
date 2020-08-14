@@ -1,8 +1,7 @@
-package com.example.fix_it_pagliu;
+package com.example.fix_it_pagliu.employee;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -16,6 +15,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.fix_it_pagliu.MainActivity;
+import com.example.fix_it_pagliu.R;
+import com.example.fix_it_pagliu.user.auth.Login;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;

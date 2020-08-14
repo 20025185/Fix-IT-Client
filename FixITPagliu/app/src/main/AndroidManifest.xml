@@ -25,7 +25,7 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <activity android:name=".Login">
+        <activity android:name=".user.auth.Login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -37,12 +37,12 @@
         <activity android:name=".user.reports.OpenReports" />
         <activity android:name=".user.news.PostListActivity" />
         <activity android:name=".user.reports.ReopenReport" />
-        <activity android:name=".StatsReports" />
+        <activity android:name=".user.map_and_stats.StatsReports" />
         <activity android:name=".user.reports.Vote" />
-        <activity android:name=".user.MapZone" />
+        <activity android:name=".user.map_and_stats.MapZone" />
         <activity android:name=".user.reports.SendReport" />
-        <activity android:name=".LoginEmployee" />
-        <activity android:name=".user.Register" />
+        <activity android:name=".employee.LoginEmployee" />
+        <activity android:name=".user.auth.Register" />
         <activity android:name=".MainActivity" />
     </application>
 
