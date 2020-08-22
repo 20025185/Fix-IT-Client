@@ -1,5 +1,10 @@
 package com.example.fix_it_pagliu.database;
 
+import android.os.Build;
+import android.os.Parcel;
+import android.os.Parcelable;
+
+
 public class Report {
     public Report(String uid, String id, String object, String date, String time, String position, boolean social, String description, String type) {
         this.uid = uid;
@@ -11,7 +16,7 @@ public class Report {
         this.social = social;
         this.description = description;
         this.type = type;
-        this.status = "Aperta" + "_" + id;
+        this.status = "Pending_" + id;
         this.priority = "0";
     }
 
@@ -139,21 +144,34 @@ public class Report {
         this.priority = priority;
     }
 
-    private String uid;
-
     public String getId() {
         return id;
     }
 
+    private String uid;
+
     private String id;
+
     private String object;
+
     private String date;
+
     private String time;
+
     private String position;
+
     private boolean social;
+
+
     private String description;
+
+
     private String type;
+
+
     private String status = "undefined";
+
+
     private String priority = "-1";
 
 

@@ -9,6 +9,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -24,7 +25,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.core.app.ActivityCompat;
 
-import com.example.fix_it_pagliu.MainActivity;
+import com.example.fix_it_pagliu.user.UserMenu;
 import com.example.fix_it_pagliu.R;
 import com.example.fix_it_pagliu.database.Report;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -42,7 +43,6 @@ import java.util.Calendar;
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 
 public class SendReport extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener, NavigationView.OnNavigationItemSelectedListener {
-
     private final String TAG = "[SendReport] : ";
     private String tipoSegnalazione = "undefined";
     private boolean socialDiffusion = false;
@@ -162,15 +162,15 @@ public class SendReport extends AppCompatActivity implements PopupMenu.OnMenuIte
         if (checkCampi()) {
             String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
             String repId = rootNode.getReference("reports").push().getKey();
-            Report report = new Report(uid, repId, objectEdit.getText().toString(), dateEdit.getText().toString(),
+            Report pendingReport = new Report(uid, repId, objectEdit.getText().toString(), dateEdit.getText().toString(),
                     timeEdit.getText().toString(), placeEdit.getText().toString(),
                     socialDiffusion, descriptionEdit.getText().toString(), tipoSegnalazione);
-
-            dbReference.child(repId).setValue(report).addOnSuccessListener(new OnSuccessListener<Void>() {
+            Log.d(TAG, pendingReport.getStatus());
+            dbReference.child(repId).setValue(pendingReport).addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(Void aVoid) {
-                    Toast.makeText(SendReport.this, "Segnalazione inviata con successo sulla piattaforma\n", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(SendReport.this, MainActivity.class));
+                    Toast.makeText(SendReport.this, "Segnalazione inviata con successo sulla piattaforma.\nUn nostro operatore prenderà in impegno la sua segnalazione.", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(SendReport.this, UserMenu.class));
                 }
             }).addOnFailureListener(new OnFailureListener() {
                 @Override

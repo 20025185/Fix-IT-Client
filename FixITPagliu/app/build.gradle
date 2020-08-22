@@ -26,7 +26,7 @@ android {
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
-    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
 
     //  Google Service
@@ -45,9 +45,11 @@ dependencies {
     apply plugin: 'com.google.gms.google-services'
 
     //  AndroidX appCompat
-    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.appcompat:appcompat:1.2.0'
+
     //  Material Design
-    implementation 'com.google.android.material:material:1.1.0'
+    implementation 'com.google.android.material:material:1.2.0'
+
     //  Navigation
     implementation "androidx.navigation:navigation-fragment:2.3.0"
     implementation "androidx.navigation:navigation-ui:2.3.0"
@@ -55,10 +57,10 @@ dependencies {
     //  FirebaseRecyclerOptions
     implementation 'com.firebaseui:firebase-ui-database:4.2.1'
 
-    //  recycler
-    //implementation 'com.google.android.material:material:1.3.0-alpha02'
-
     //  Graphview
     implementation 'com.jjoe64:graphview:4.2.2'
 
+    //  Retrofit2
+    implementation 'com.squareup.retrofit2:retrofit:2.4.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
 }

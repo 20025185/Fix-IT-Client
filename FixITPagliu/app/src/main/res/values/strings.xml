@@ -66,4 +66,13 @@
     <string name="grazie_per_averci_fornito_il_tuo_feedback">Grazie per averci fornito il tuo feedback!</string>
     <string name="localit">Località</string>
     <string name="inserisci_localit">Inserisci località</string>
+    <string name="pending_list">Pending List</string>
+    <string name="aperte">Aperte</string>
+    <string name="chiuse">Chiuse</string>
+    <string name="carica_segnalazioni">Carica Segnalazioni</string>
+    <string name="others">Others</string>
+    <string name="fix_it">FIX-IT</string>
+    <string name="employee_dashboard">Employee Dashboard</string>
+    <string name="edit">Edit</string>
+    <string name="apri_nsegnalazione">Apri\nSegnalazione</string>
 </resources>

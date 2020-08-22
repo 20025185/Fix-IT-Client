@@ -16,7 +16,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.fix_it_pagliu.MainActivity;
+import com.example.fix_it_pagliu.user.UserMenu;
 import com.example.fix_it_pagliu.R;
 import com.example.fix_it_pagliu.database.User;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -71,7 +71,7 @@ public class Register extends AppCompatActivity {
         fAuth = FirebaseAuth.getInstance();
 
         if (fAuth.getCurrentUser() != null) {
-            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+            startActivity(new Intent(getApplicationContext(), UserMenu.class));
             finish();
         }
 
@@ -154,7 +154,7 @@ public class Register extends AppCompatActivity {
                         }
                     });
 
-                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                    startActivity(new Intent(getApplicationContext(), UserMenu.class));
                 } else {
                     Toast.makeText(Register.this, "Errore\n\"" + task.getException().getMessage() + "\"", Toast.LENGTH_SHORT).show();
                 }

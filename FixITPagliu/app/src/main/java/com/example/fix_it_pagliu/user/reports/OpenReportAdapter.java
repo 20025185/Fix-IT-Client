@@ -8,13 +8,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.fix_it_pagliu.MainActivity;
 import com.example.fix_it_pagliu.R;
 import com.example.fix_it_pagliu.user.reports.forum.BidirectionalForum;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;

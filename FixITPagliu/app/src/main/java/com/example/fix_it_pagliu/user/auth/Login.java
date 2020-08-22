@@ -16,8 +16,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.fix_it_pagliu.employee.LoginEmployee;
-import com.example.fix_it_pagliu.MainActivity;
+import com.example.fix_it_pagliu.user.UserMenu;
 import com.example.fix_it_pagliu.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -63,14 +62,14 @@ public class Login extends AppCompatActivity {
         dbReference = rootNode.getReference("users");
 
         if (fAuth.getCurrentUser() != null) {
-            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+            startActivity(new Intent(getApplicationContext(), UserMenu.class));
             finish();
         }
 
         m_employeeLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), LoginEmployee.class));
+                startActivity(new Intent(getApplicationContext(), com.example.fix_it_pagliu.employee.Login.class));
             }
         });
 
@@ -109,7 +108,7 @@ public class Login extends AppCompatActivity {
                                     if (dataSnapshot.child("role").getValue(String.class).equals("user")) {
                                         Toast.makeText(Login.this, "User loggato con successo.", Toast.LENGTH_SHORT).show();
                                         m_progressBar.setVisibility(View.GONE);
-                                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                                        startActivity(new Intent(getApplicationContext(), UserMenu.class));
                                     } else {
                                         Toast.makeText(Login.this, "Login non corretto per la tipologia di account utilizzato.\n", Toast.LENGTH_SHORT).show();
                                         m_progressBar.setVisibility(View.GONE);

@@ -49,27 +49,6 @@
         </menu>
     </item>
 
-    <item
-        android:id="@+id/nav_imp_panel"
-        android:title="@string/pannello_di_controllo">
-        <menu>
-            <group android:checkableBehavior="single">
-                <item
-                    android:id="@+id/nav_load_report"
-                    android:icon="@drawable/ic_imp_segnalazione"
-                    android:title="@string/invia_segnalazione" />
-                <item
-                    android:id="@+id/nav_imp_statistiche"
-                    android:icon="@drawable/ic_stats"
-                    android:title="@string/statistiche" />
-                <item
-                    android:id="@+id/nav_imp_report"
-                    android:icon="@drawable/ic_gestione_segnalazioni"
-                    android:title="@string/gestione_segnalazioni" />
-            </group>
-        </menu>
-    </item>
-
     <item android:title="@string/blank">
         <menu>
             <group android:checkableBehavior="single">

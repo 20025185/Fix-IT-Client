@@ -2,21 +2,29 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="200dp"
-    android:background="@drawable/fui_idp_button_background_email"
+    android:background="#e3c240"
     android:gravity="bottom"
     android:orientation="vertical"
     android:padding="20dp">
 
     <ImageView
-        android:layout_width="110dp"
-        android:layout_height="110dp"
-        android:src="@drawable/ic_gestione_segnalazioni" />
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/ic_baseline_employee_header" />
 
     <TextView
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:text="@string/fix_it"
         android:textColor="#FFFFFF"
         android:textSize="30sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="31dp"
+        android:text="@string/employee_dashboard"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold"
+        android:textSize="15sp" />
 
 </LinearLayout>

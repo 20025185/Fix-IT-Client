@@ -32,6 +32,9 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".employee.EmployeeMenu" />
+        <activity android:name=".employee.reports.PendingReports" />
+        <activity android:name=".employee.reports.forum.BidirectionalForumEmployee" />
         <activity android:name=".user.reports.ClosedReports" />
         <activity android:name=".user.reports.forum.BidirectionalForum" />
         <activity android:name=".user.reports.OpenReports" />
@@ -41,9 +44,9 @@
         <activity android:name=".user.reports.Vote" />
         <activity android:name=".user.map_and_stats.MapZone" />
         <activity android:name=".user.reports.SendReport" />
-        <activity android:name=".employee.LoginEmployee" />
+        <activity android:name=".employee.Login" />
         <activity android:name=".user.auth.Register" />
-        <activity android:name=".MainActivity" />
+        <activity android:name=".user.UserMenu" />
     </application>
 
 </manifest>

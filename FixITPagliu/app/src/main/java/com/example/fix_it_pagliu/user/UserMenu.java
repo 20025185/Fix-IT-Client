@@ -1,4 +1,4 @@
-package com.example.fix_it_pagliu;
+package com.example.fix_it_pagliu.user;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -20,6 +20,8 @@ import android.widget.Toast;
 import androidx.appcompat.widget.Toolbar;
 
 
+import com.example.fix_it_pagliu.R;
+import com.example.fix_it_pagliu.employee.EmployeeMenu;
 import com.example.fix_it_pagliu.user.auth.Login;
 import com.example.fix_it_pagliu.user.map_and_stats.MapZone;
 import com.example.fix_it_pagliu.user.map_and_stats.StatsReports;
@@ -39,8 +41,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-    private final static String TAG = "[MainActivity] : ";
+public class UserMenu extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+    private final static String TAG = "[UserMenu] : ";
     //  Firebase
     private FirebaseDatabase rootNode;
     private DatabaseReference databaseReference;
@@ -54,37 +56,34 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private NavigationView navigationView;
     private Toolbar toolbar;
     private Menu menu;
-
     private TextView verifyMsg;
     private Button resendCode;
-
     private TextView nomeUser, emailUser,
             roleUser, fiscalUser, birthdayUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_user_menu);
 
+        //  XML
         nomeUser = findViewById(R.id.nomeUser);
         emailUser = findViewById(R.id.emailUser);
         roleUser = findViewById(R.id.roleUser);
         fiscalUser = findViewById(R.id.fiscalUser);
         birthdayUser = findViewById(R.id.birthdayUser);
-
         resendCode = findViewById(R.id.resendCode);
         verifyMsg = findViewById(R.id.emailNotVerified);
 
-        fAuth = FirebaseAuth.getInstance();
-        rootNode = FirebaseDatabase.getInstance();
-        databaseReference = rootNode.getReference("users");
-
-        final FirebaseUser user = fAuth.getCurrentUser();
-
-        //  Navigation hooks
+        //  Navigation hooks (XML)
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
         toolbar = findViewById(R.id.toolbar);
+
+        //  Firebase
+        fAuth = FirebaseAuth.getInstance();
+        rootNode = FirebaseDatabase.getInstance();
+        databaseReference = rootNode.getReference("users");
 
         //  Toolbar
         setSupportActionBar(toolbar);
@@ -99,22 +98,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
         //  Email verification
-
-        if (!user.isEmailVerified() && !roleUser.getText().equals("Impiegato")) {
+        if (!fAuth.getCurrentUser().isEmailVerified() && !roleUser.getText().equals("Impiegato")) {
             verifyMsg.setVisibility(View.VISIBLE);
             resendCode.setVisibility(View.VISIBLE);
             resendCode.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    final Task<Void> voidTask = user.sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
+                    final Task<Void> voidTask = fAuth.getCurrentUser().sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
-                            Toast.makeText(MainActivity.this, "È stata inviata una e-Mail di verifica.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(UserMenu.this, "È stata inviata una e-Mail di verifica.", Toast.LENGTH_SHORT).show();
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(MainActivity.this, "Errore nell'invio della e-Mail.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(UserMenu.this, "Errore nell'invio della e-Mail.", Toast.LENGTH_SHORT).show();
                         }
                     });
                 }
@@ -122,7 +120,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
 
     }
-
 
     @Override
     public void onBackPressed() {
@@ -138,27 +135,25 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onStart();
 
         currentUser = fAuth.getCurrentUser();
+        currentUid = currentUser.getUid();
 
         if (currentUser == null)
             logout();
 
+
+
         currentMail = currentUser.getEmail();
         emailUser.setText(currentMail);
-
-        currentUid = currentUser.getUid();
 
         menu = navigationView.getMenu();
         ValueEventListener valueEventListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.child("role").getValue(String.class).equals("user")) {
-                    menu.findItem(R.id.nav_imp_panel).setVisible(false);
-                    menu.findItem(R.id.nav_menu_user).setVisible(true);
                     roleUser.setText("Utente standard");
                 } else {
-                    menu.findItem(R.id.nav_imp_panel).setVisible(true);
-                    menu.findItem(R.id.nav_menu_user).setVisible(false);
                     roleUser.setText("Impiegato");
+                    startActivity(new Intent(getApplicationContext(), EmployeeMenu.class));
                 }
 
                 nomeUser.setText(dataSnapshot.child("fullname").getValue(String.class) + " " + dataSnapshot.child("surname").getValue(String.class));
@@ -184,40 +179,54 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             case R.id.nav_sendReport:
                 if (currentUser.isEmailVerified()) {
-                    startActivity(new Intent(MainActivity.this, SendReport.class));
+                    startActivity(new Intent(UserMenu.this, SendReport.class));
                 } else {
-                    Toast.makeText(MainActivity.this, "Devi attivare l'account tramite e-mail per accedere a questo servizio.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(UserMenu.this, "Devi attivare l'account tramite e-mail per accedere a questo servizio.", Toast.LENGTH_SHORT).show();
                 }
                 break;
 
             case R.id.nav_news:
-                startActivity(new Intent(MainActivity.this, PostListActivity.class));
+                startActivity(new Intent(UserMenu.this, PostListActivity.class));
                 break;
 
             case R.id.nav_mapReports:
-                startActivity(new Intent(MainActivity.this, MapZone.class));
+                startActivity(new Intent(UserMenu.this, MapZone.class));
                 break;
 
             case R.id.nav_segnAperte:
-                intent = new Intent(MainActivity.this, OpenReports.class);
-                intent.putExtra("UID", currentUser.getUid());
-                startActivity(intent);
+                if (currentUser.isEmailVerified()) {
+                    intent = new Intent(UserMenu.this, OpenReports.class);
+                    intent.putExtra("UID", currentUser.getUid());
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(UserMenu.this, "Devi attivare l'account tramite e-mail per accedere a questo servizio.", Toast.LENGTH_SHORT).show();
+                }
                 break;
 
             case R.id.nav_segnChiuse:
-                intent = new Intent(MainActivity.this, ClosedReports.class);
-                intent.putExtra("UID", currentUser.getUid());
-                startActivity(intent);
+                if (currentUser.isEmailVerified()) {
+                    intent = new Intent(UserMenu.this, ClosedReports.class);
+                    intent.putExtra("UID", currentUser.getUid());
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(UserMenu.this, "Devi attivare l'account tramite e-mail per accedere a questo servizio.", Toast.LENGTH_SHORT).show();
+                }
+
                 break;
+
             case R.id.nav_statsreport:
-                intent = new Intent(MainActivity.this, StatsReports.class);
-                intent.putExtra("UID", currentUser.getUid());
-                startActivity(intent);
+                if (currentUser.isEmailVerified()) {
+                    intent = new Intent(UserMenu.this, StatsReports.class);
+                    intent.putExtra("UID", currentUser.getUid());
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(UserMenu.this, "Devi attivare l'account tramite e-mail per accedere a questo servizio.", Toast.LENGTH_SHORT).show();
+                }
                 break;
+
             case R.id.nav_logout:
                 logout();
                 break;
-
         }
 
         drawerLayout.closeDrawer(GravityCompat.START);
