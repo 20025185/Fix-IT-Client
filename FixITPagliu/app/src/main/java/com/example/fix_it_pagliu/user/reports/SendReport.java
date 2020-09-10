@@ -25,9 +25,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.core.app.ActivityCompat;
 
+import com.example.fix_it_pagliu.database.Report;
 import com.example.fix_it_pagliu.user.UserMenu;
 import com.example.fix_it_pagliu.R;
-import com.example.fix_it_pagliu.database.Report;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnFailureListener;

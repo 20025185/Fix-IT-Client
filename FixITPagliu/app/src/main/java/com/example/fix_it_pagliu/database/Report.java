@@ -1,10 +1,5 @@
 package com.example.fix_it_pagliu.database;
 
-import android.os.Build;
-import android.os.Parcel;
-import android.os.Parcelable;
-
-
 public class Report {
     public Report(String uid, String id, String object, String date, String time, String position, boolean social, String description, String type) {
         this.uid = uid;
@@ -16,8 +11,11 @@ public class Report {
         this.social = social;
         this.description = description;
         this.type = type;
-        this.status = "Pending_" + id;
+        this.status = "Pending_" + uid;
         this.priority = "0";
+    }
+
+    public Report() {
     }
 
     @Override
@@ -62,6 +60,46 @@ public class Report {
         this.type = type;
         this.status = status;
         this.priority = priority;
+    }
+
+    public Report(String id, String position, String priority, String description, String object, String date, String time, String type, String status, String uid) {
+        this.id = id;
+        this.object = object;
+        this.date = date;
+        this.time = time;
+        this.position = position;
+        this.description = description;
+        this.type = type;
+        this.status = status;
+        this.priority = priority;
+        this.uid = uid;
+    }
+
+    public Report(String uid, String id, String object, String date, String time, String position, boolean social, String description, String type, String rating, String status, String priority) {
+        this.uid = uid;
+        this.id = id;
+        this.object = object;
+        this.date = date;
+        this.time = time;
+        this.position = position;
+        this.social = social;
+        this.description = description;
+        this.type = type;
+        this.rating = rating;
+        this.status = status;
+        this.priority = priority;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getRating() {
+        return rating;
+    }
+
+    public void setRating(String rating) {
+        this.rating = rating;
     }
 
     public String getUid() {
@@ -162,15 +200,14 @@ public class Report {
 
     private boolean social;
 
-
     private String description;
-
 
     private String type;
 
 
-    private String status = "undefined";
+    private String rating;
 
+    private String status = "undefined";
 
     private String priority = "-1";
 

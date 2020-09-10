@@ -2,6 +2,7 @@ package com.example.fix_it_pagliu.user.reports;
 
 import android.content.Context;
 import android.content.Intent;
+import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
 import android.view.LayoutInflater;

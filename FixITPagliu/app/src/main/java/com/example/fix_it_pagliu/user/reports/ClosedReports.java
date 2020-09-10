@@ -1,7 +1,9 @@
 package com.example.fix_it_pagliu.user.reports;
 
 import android.os.Bundle;
+import android.util.Log;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -9,10 +11,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.fix_it_pagliu.R;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 public class ClosedReports extends AppCompatActivity {
+    final private String TAG = "[ClosedReports] : ";
     ClosedReportAdapter closedReportAdapter;
     RecyclerView recyclerView;
 
@@ -40,12 +46,14 @@ public class ClosedReports extends AppCompatActivity {
 
         FirebaseRecyclerOptions<OReport> options =
                 new FirebaseRecyclerOptions.Builder<OReport>()
-                        .setQuery((Query) FirebaseDatabase.getInstance().getReference().child("reports").orderByChild("status").equalTo("Chiusa_" + userID), OReport.class)
+                        .setQuery((Query) FirebaseDatabase.getInstance()
+                                .getReference()
+                                .child("reports")
+                                .orderByChild("status").equalTo("Chiusa_" + userID), OReport.class)
                         .build();
-
+        
         closedReportAdapter = new ClosedReportAdapter(options);
         closedReportAdapter.setInstance(getBaseContext());
-
         recyclerView.setAdapter(closedReportAdapter);
     }
 

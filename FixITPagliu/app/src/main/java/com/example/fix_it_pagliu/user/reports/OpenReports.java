@@ -15,7 +15,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 
 public class OpenReports extends AppCompatActivity {
-    OpenReportAdapter oOpenReportAdapter;
+    OpenReportAdapter openReportAdapter;
     RecyclerView recyclerView;
     String openable = null;
 
@@ -47,10 +47,10 @@ public class OpenReports extends AppCompatActivity {
                                 .orderByChild("status").equalTo("Aperta_" + userID), OReport.class)
                         .build();
 
-        oOpenReportAdapter = new OpenReportAdapter(options);
-        oOpenReportAdapter.setInstance(getBaseContext());
+        openReportAdapter = new OpenReportAdapter(options);
+        openReportAdapter.setInstance(getBaseContext());
 
-        recyclerView.setAdapter(oOpenReportAdapter);
+        recyclerView.setAdapter(openReportAdapter);
 
         if (openable != null)
             Toast.makeText(this, openable, Toast.LENGTH_SHORT).show();
@@ -60,14 +60,14 @@ public class OpenReports extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        oOpenReportAdapter.startListening();
+        openReportAdapter.startListening();
     }
 
 
     @Override
     protected void onStop() {
         super.onStop();
-        oOpenReportAdapter.stopListening();
+        openReportAdapter.stopListening();
     }
 
 
