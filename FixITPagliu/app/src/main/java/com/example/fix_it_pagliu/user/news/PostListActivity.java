@@ -13,7 +13,6 @@ import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class PostListActivity extends AppCompatActivity {
-    private RecyclerView recyclerView;
     private PostAdapter adapter;
 
     @Override
@@ -21,7 +20,7 @@ public class PostListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_list);
 
-        recyclerView = findViewById(R.id.recyclerPost);
+        RecyclerView recyclerView = findViewById(R.id.recyclerPost);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setReverseLayout(true);

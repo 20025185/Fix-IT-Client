@@ -30,13 +30,24 @@
         android:id="@+id/repID"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:onClick="openChat"
         android:text="@string/missing_id"
         android:textColor="#396b99"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintLeft_toLeftOf="@+id/repObject"
-        app:layout_constraintTop_toBottomOf="@+id/repObject"
-        android:onClick="openChat"/>
+        app:layout_constraintTop_toBottomOf="@+id/repObject" />
+
+    <TextView
+        android:id="@+id/repStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10sp"
+        android:text="@string/undefined"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="@id/repDate"
+        app:layout_constraintTop_toBottomOf="@id/repDate" />
 
     <TextView
         android:id="@+id/repDate"

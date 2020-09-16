@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -31,10 +32,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".employee.EmployeeMenu" />
-        <activity android:name=".employee.reports.PendingReports" />
-        <activity android:name=".employee.reports.forum.BidirectionalForumEmployee" />
+        
         <activity android:name=".user.reports.ClosedReports" />
         <activity android:name=".user.reports.forum.BidirectionalForum" />
         <activity android:name=".user.reports.OpenReports" />
@@ -44,8 +42,7 @@
         <activity android:name=".user.reports.Vote" />
         <activity android:name=".user.map_and_stats.MapZone" />
         <activity android:name=".user.reports.SendReport" />
-        <activity android:name=".employee.Login" />
-        <activity android:name=".user.auth.Register" />
+        <activity android:name=".user.auth.Registration" />
         <activity android:name=".user.UserMenu" />
     </application>
 

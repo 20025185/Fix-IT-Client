@@ -4,7 +4,6 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -26,22 +25,19 @@ import com.jjoe64.graphview.series.LineGraphSeries;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 import java.util.TreeMap;
 
 public class StatsReports extends AppCompatActivity {
     private String TAG = "[StatsReports] : ";
 
-    //  XML
     private GraphView graphView;
-    private LineGraphSeries lineGraphSeries;
+    private LineGraphSeries<DataPoint> lineGraphSeries;
     private EditText editText;
     private Button button;
 
-    //  Firebase
-    private FirebaseDatabase database;
     private DatabaseReference dbr;
 
-    //  Analytics
     private TreeMap<String, Integer> data;
     private String[] keySet;
 
@@ -53,10 +49,10 @@ public class StatsReports extends AppCompatActivity {
         button = findViewById(R.id.searchLoc);
         editText = findViewById(R.id.scriviLoc);
         graphView = findViewById(R.id.graphView);
-        lineGraphSeries = new LineGraphSeries();
+        lineGraphSeries = new LineGraphSeries<>();
         graphView.addSeries(lineGraphSeries);
 
-        database = FirebaseDatabase.getInstance();
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
         dbr = database.getReference("reports");
 
         setListeners();
@@ -69,7 +65,6 @@ public class StatsReports extends AppCompatActivity {
         initializeGraph();
 
         graphView.getGridLabelRenderer().setLabelFormatter(new DefaultLabelFormatter() {
-            int i = 0;
 
             @Override
             public String formatLabel(double value, boolean isValueX) {
@@ -83,56 +78,55 @@ public class StatsReports extends AppCompatActivity {
     }
 
     private void setListeners() {
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (!(editText.getText().toString().isEmpty())) {
-                    final Geocoder geocoder = new Geocoder(getApplicationContext());
+        button.setOnClickListener(view -> {
+            if (!(editText.getText().toString().isEmpty())) {
+                final Geocoder geocoder = new Geocoder(getApplicationContext());
 
-                    dbr.addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            String searchedLoc = editText.getText().toString();
-                            String[] ll;
-                            data = new TreeMap<String, Integer>();
+                dbr.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        String searchedLoc = editText.getText().toString();
+                        String[] ll;
+                        data = new TreeMap<>();
 
-                            for (DataSnapshot s : snapshot.getChildren()) {
-                                String pos = s.child("position").getValue().toString();
-                                ll = pos.split(" ");
-                                List<Address> addresses = null;
+                        for (DataSnapshot s : snapshot.getChildren()) {
+                            String pos = Objects.requireNonNull(s.child("position").getValue()).toString();
+                            ll = pos.split(" ");
+                            List<Address> addresses = null;
 
-                                try {
-                                    addresses = geocoder.getFromLocation(Double.parseDouble(ll[0]), Double.parseDouble(ll[1]), 1);
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                }
-
-
-                                if (addresses.toString().contains(searchedLoc)) {
-                                    if (data.containsKey(s.child("date").getValue().toString())) {
-                                        int val = data.get(s.child("date").getValue().toString());
-                                        ++val;
-                                        data.put(s.child("date").getValue().toString(), val);
-                                    } else {
-                                        data.put(s.child("date").getValue().toString(), 1);
-                                    }
-                                }
-
+                            try {
+                                addresses = geocoder.getFromLocation(Double.parseDouble(ll[0]), Double.parseDouble(ll[1]), 1);
+                            } catch (IOException e) {
+                                e.printStackTrace();
                             }
-                            Log.d(TAG, data.toString());
-                            updateGraph();
+
+
+                            assert addresses != null;
+
+                            if (addresses.toString().contains(searchedLoc)) {
+                                if (data.containsKey(Objects.requireNonNull(s.child("date").getValue()).toString())) {
+                                    @SuppressWarnings("ConstantConditions") int val = data.get(s.child("date").getValue().toString());
+                                    ++val;
+                                    data.put(Objects.requireNonNull(s.child("date").getValue()).toString(), val);
+                                } else {
+                                    data.put(Objects.requireNonNull(s.child("date").getValue()).toString(), 1);
+                                }
+                            }
+
                         }
+                        Log.d(TAG, data.toString());
+                        updateGraph();
+                    }
 
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
 
-                        }
-                    });
-                } else {
-                    Toast.makeText(StatsReports.this, "Inserire la località da analizzare", Toast.LENGTH_SHORT).show();
-                }
-
+                    }
+                });
+            } else {
+                Toast.makeText(StatsReports.this, "Inserire la località da analizzare", Toast.LENGTH_SHORT).show();
             }
+
         });
     }
 

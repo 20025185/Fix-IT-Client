@@ -25,7 +25,6 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -35,29 +34,22 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 
 import static com.google.android.gms.maps.model.BitmapDescriptorFactory.*;
 
 public class MapZone extends FragmentActivity implements OnMapReadyCallback {
-    private final String TAG = "[MapZone] : ";
-    private Location currentLocation;
-    private FusedLocationProviderClient fusedLocationProviderClient;
-    private static final int REQUEST_CODE = 101;
-
-    private GoogleMap map;
-    private SupportMapFragment supportMapFragment;
-
-    private static LatLng favoritePlace;
-    private static boolean firstSession = true;
-    //  XML
+    //  private final String TAG = "[MapZone] : ";
     private SearchView searchView;
 
-    //  Firebase
-    private FirebaseDatabase database;
-    private DatabaseReference databaseReference;
-
+    private static final int REQUEST_CODE = 101;
+    private Location currentLocation;
+    private FusedLocationProviderClient fusedLocationProviderClient;
+    private GoogleMap map;
     private static Report[] reports;
     private static int numberOfReports = 0;
+    private static LatLng favoritePlace;
+    private static boolean firstSession = true;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -65,7 +57,7 @@ public class MapZone extends FragmentActivity implements OnMapReadyCallback {
         setContentView(R.layout.activity_map);
 
         searchView = findViewById(R.id.svLocation);
-        supportMapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.mapFrag);
+        getSupportFragmentManager().findFragmentById(R.id.mapFrag);
 
         if (firstSession)
             retrieveData();
@@ -83,6 +75,8 @@ public class MapZone extends FragmentActivity implements OnMapReadyCallback {
                     } catch (IOException e) {
                         Toast.makeText(MapZone.this, e.toString(), Toast.LENGTH_SHORT).show();
                     }
+
+                    assert addressList != null;
 
                     if (!addressList.isEmpty()) {
                         Address address = addressList.get(0);
@@ -107,8 +101,8 @@ public class MapZone extends FragmentActivity implements OnMapReadyCallback {
     }
 
     private void retrieveData() {
-        database = FirebaseDatabase.getInstance();
-        databaseReference = database.getReference("reports");
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference databaseReference = database.getReference("reports");
 
         ValueEventListener valueEventListener = new ValueEventListener() {
             @Override
@@ -118,11 +112,11 @@ public class MapZone extends FragmentActivity implements OnMapReadyCallback {
                 int i = 0;
 
                 for (DataSnapshot ds : snapshot.getChildren()) {
-                    String id = ds.child("id").getValue().toString();
-                    String position = ds.child("position").getValue().toString();
-                    String priority = ds.child("priority").getValue().toString();
-                    String description = ds.child("description").getValue().toString();
-                    String object = ds.child("object").getValue().toString();
+                    String id = Objects.requireNonNull(ds.child("id").getValue()).toString();
+                    String position = Objects.requireNonNull(ds.child("position").getValue()).toString();
+                    String priority = Objects.requireNonNull(ds.child("priority").getValue()).toString();
+                    String description = Objects.requireNonNull(ds.child("description").getValue()).toString();
+                    String object = Objects.requireNonNull(ds.child("object").getValue()).toString();
                     reports[i] = new Report(id, position, priority, description, object);
                     ++i;
                 }
@@ -147,17 +141,15 @@ public class MapZone extends FragmentActivity implements OnMapReadyCallback {
         }
 
         Task<Location> task = fusedLocationProviderClient.getLastLocation();
-        task.addOnSuccessListener(new OnSuccessListener<Location>() {
-            @Override
-            public void onSuccess(Location location) {
-                if (location != null) {
-                    currentLocation = location;
-                    Toast.makeText(getApplicationContext(), currentLocation.getLatitude()
-                            + " " +
-                            currentLocation.getLongitude(), Toast.LENGTH_SHORT).show();
-                    SupportMapFragment supportMapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.mapFrag);
-                    supportMapFragment.getMapAsync(MapZone.this);
-                }
+        task.addOnSuccessListener(location -> {
+            if (location != null) {
+                currentLocation = location;
+                Toast.makeText(getApplicationContext(), currentLocation.getLatitude()
+                        + " " +
+                        currentLocation.getLongitude(), Toast.LENGTH_SHORT).show();
+                SupportMapFragment supportMapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.mapFrag);
+                assert supportMapFragment != null;
+                supportMapFragment.getMapAsync(MapZone.this);
             }
         });
     }
@@ -192,12 +184,16 @@ public class MapZone extends FragmentActivity implements OnMapReadyCallback {
             LatLng latLng_t = new LatLng(Double.parseDouble(coords[0]), Double.parseDouble(coords[1]));
             float markerColor = HUE_RED;
 
-            if (reports[i].getPriority().equals("0")) {
-                markerColor = HUE_GREEN;
-            } else if (reports[i].getPriority().equals("1")) {
-                markerColor = HUE_YELLOW;
-            } else if (reports[i].getPriority().equals("2")) {
-                markerColor = HUE_RED;
+            switch (reports[i].getPriority()) {
+                case "0":
+                    markerColor = HUE_GREEN;
+                    break;
+                case "1":
+                    markerColor = HUE_YELLOW;
+                    break;
+                case "2":
+                    markerColor = HUE_RED;
+                    break;
             }
             googleMap.addMarker(new MarkerOptions().position(latLng_t)
                     .title(reports[i].getObject())
@@ -209,12 +205,10 @@ public class MapZone extends FragmentActivity implements OnMapReadyCallback {
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        switch (requestCode) {
-            case REQUEST_CODE:
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    fetchLastLocation();
-                }
-                break;
+        if (requestCode == REQUEST_CODE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                fetchLastLocation();
+            }
         }
     }
 }

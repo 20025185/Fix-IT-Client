@@ -1,5 +1,6 @@
 package com.example.fix_it_pagliu.database;
 
+@SuppressWarnings("ALL")
 public class Report {
     public Report(String uid, String id, String object, String date, String time, String position, boolean social, String description, String type) {
         this.uid = uid;
@@ -13,9 +14,6 @@ public class Report {
         this.type = type;
         this.status = "Pending_" + uid;
         this.priority = "0";
-    }
-
-    public Report() {
     }
 
     @Override

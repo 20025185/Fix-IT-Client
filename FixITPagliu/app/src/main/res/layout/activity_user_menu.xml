@@ -15,15 +15,14 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         app:headerLayout="@layout/header"
-        app:menu="@menu/drawer_menu_user">
-    </com.google.android.material.navigation.NavigationView>
+        app:menu="@menu/drawer_menu_user" />
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:fitsSystemWindows="true"
         android:layout_height="wrap_content"
-        android:background="#fff7f8" />
+        android:background="#fff7f8"
+        android:fitsSystemWindows="true" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -37,6 +36,7 @@
             android:layout_marginLeft="250dp"
             android:layout_marginTop="20dp"
             android:text="@string/l_e_mail_non_verificata"
+            android:textColor="#c91e12"
             android:visibility="invisible" />
 
         <Button
@@ -44,19 +44,27 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/emailNotVerified"
-            android:layout_marginStart="250dp"
-            android:layout_marginLeft="250dp"
+            android:layout_alignEnd="@+id/emailNotVerified"
+            android:layout_alignRight="@+id/emailNotVerified"
             android:layout_marginTop="10dp"
             android:text="@string/resend"
             android:visibility="invisible" />
+
+        <ImageView
+            android:id="@+id/profileImg"
+            android:layout_width="500px"
+            android:layout_height="500px"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="50dp"
+            tools:ignore="PxUsage" />
 
         <TextView
             android:id="@+id/nomeText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="50dp"
-            android:layout_marginLeft="50dp"
-            android:layout_marginTop="100dp"
+            android:layout_alignTop="@+id/profileImg"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="210dp"
             android:text="@string/nome"
             android:textColor="#808080" />
 
@@ -65,8 +73,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/nomeText"
-            android:layout_marginStart="50dp"
-            android:layout_marginLeft="50dp"
+            android:layout_centerHorizontal="true"
             android:text="@string/nullStr"
             android:textColor="#000000" />
 
@@ -75,8 +82,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/nomeUser"
-            android:layout_marginStart="50dp"
-            android:layout_marginLeft="50dp"
+            android:layout_centerHorizontal="true"
             android:layout_marginTop="20dp"
             android:text="@string/e_mail"
             android:textColor="#808080" />
@@ -86,8 +92,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/emailText"
-            android:layout_marginStart="50dp"
-            android:layout_marginLeft="50dp"
+            android:layout_centerHorizontal="true"
             android:text="@string/null_invalid_ptr"
             android:textColor="#000000" />
 
@@ -96,8 +101,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/emailUser"
-            android:layout_marginStart="50dp"
-            android:layout_marginLeft="50dp"
+            android:layout_centerHorizontal="true"
             android:layout_marginTop="20dp"
             android:text="@string/tipo"
             android:textColor="#808080" />
@@ -107,8 +111,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/roleText"
-            android:layout_marginStart="50dp"
-            android:layout_marginLeft="50dp"
+            android:layout_centerHorizontal="true"
             android:text="@string/invalid"
             android:textColor="#000000" />
 
@@ -117,8 +120,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/roleText"
-            android:layout_marginStart="50dp"
-            android:layout_marginLeft="50dp"
+            android:layout_centerHorizontal="true"
             android:layout_marginTop="40dp"
             android:text="@string/codice_fiscale"
             android:textColor="#808080" />
@@ -128,8 +130,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/fiscalText"
-            android:layout_marginStart="50dp"
-            android:layout_marginLeft="50dp"
+            android:layout_centerHorizontal="true"
             android:text="@string/invalid"
             android:textColor="#000000" />
 
@@ -138,8 +139,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/fiscalUser"
-            android:layout_marginStart="50dp"
-            android:layout_marginLeft="50dp"
+            android:layout_centerHorizontal="true"
             android:layout_marginTop="20dp"
             android:text="@string/data_di_nascita"
             android:textColor="#808080" />
@@ -149,8 +149,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/birthdayText"
-            android:layout_marginStart="50dp"
-            android:layout_marginLeft="50dp"
+            android:layout_centerHorizontal="true"
             android:text="@string/dd_mm_yyyy"
             android:textColor="#000000" />
 

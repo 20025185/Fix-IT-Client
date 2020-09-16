@@ -1,40 +1,12 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--suppress ALL -->
+<?xml version="1.0" encoding="utf-8"?><!--suppress ALL -->
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_profile"
             android:icon="@drawable/ic_profile"
-            android:title="@string/profile"/>
+            android:title="@string/profile" />
     </group>
-
-    <item
-        android:id="@+id/nav_menu_employee"
-        android:title="Segnalazioni">
-        <menu>
-            <group android:checkableBehavior="single">
-                <item
-                    android:id="@+id/nav_imp_pending_list"
-                    android:icon="@drawable/ic_baseline_pending"
-                    android:title="@string/pending_list" />
-
-                <item
-                    android:id="@+id/nav_imp_open_report"
-                    android:icon="@drawable/ic_segnalazioni_aperte"
-                    android:title="@string/aperte" />
-                <item
-                    android:id="@+id/nav_imp_closed_report"
-                    android:icon="@drawable/ic_segnalazioni_chiuse"
-                    android:title="@string/chiuse" />
-
-                <item
-                    android:id="@+id/nav_imp_load_report"
-                    android:icon="@drawable/ic_report"
-                    android:title="@string/carica_segnalazioni" />
-            </group>
-        </menu>
-    </item>
 
     <item
         android:id="@+id/nav_imp_panel"

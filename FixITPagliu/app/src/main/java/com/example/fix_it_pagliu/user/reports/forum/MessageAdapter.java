@@ -1,8 +1,6 @@
 package com.example.fix_it_pagliu.user.reports.forum;
 
 import android.content.Context;
-import android.os.Message;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,16 +15,13 @@ import java.util.ArrayList;
 
 public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHolder> {
 
-    private static final String TAG = "[Message Adapter] : ";
-    private Context context;
     private ArrayList<Messages> messages;
 
-    public MessageAdapter(Context context, ArrayList<Messages> messages) {
-        this.context = context;
+    public MessageAdapter(Context applicationContext, ArrayList<Messages> messages) {
         this.messages = messages;
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView msgObj;
 
         public ViewHolder(@NonNull View itemView) {

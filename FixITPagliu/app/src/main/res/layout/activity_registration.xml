@@ -3,31 +3,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".user.auth.Register">
+    tools:context=".user.auth.Registration">
 
 
-    <TextView
-        android:id="@+id/registrazioneText"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="15dp"
-        android:textColor="#000000"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/registrazione"
-        android:textSize="25sp"
-        tools:layout_editor_absoluteX="129dp"
-        tools:layout_editor_absoluteY="94dp" />
+
 
     <EditText
         android:id="@+id/nomeRegister"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:hint="Nome"
-        android:layout_below="@id/registrazioneText"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="25dp"
+        android:ems="10"
+        android:hint="@string/nome"
+        android:inputType="textPersonName"
         tools:layout_editor_absoluteX="100dp"
         tools:layout_editor_absoluteY="191dp" />
 
@@ -39,69 +28,70 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="15dp"
         android:ems="10"
-        android:hint="Cognome"
+        android:hint="@string/cognome"
         android:inputType="textPersonName"
         tools:layout_editor_absoluteX="100dp"
         tools:layout_editor_absoluteY="191dp" />
 
 
     <EditText
+        android:id="@+id/Birthday"
         android:layout_width="210dp"
         android:layout_height="wrap_content"
-        android:id="@+id/Birthday"
         android:layout_below="@id/cognomeRegister"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="15dp"
         android:clickable="true"
         android:editable="false"
-        android:hint="DD/MM/YYYY"
-        />
+        android:hint="@string/dd_mm_yyyy"
+        android:focusable="true" />
 
     <EditText
+        android:id="@+id/codiceFiscale"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@id/Birthday"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="15dp"
-        android:layout_below="@id/Birthday"
-        android:id="@+id/codiceFiscale"
-        android:hint="Codice Fiscale"
         android:ems="10"
+        android:hint="@string/codice_fiscale"
         android:inputType="textPersonName"
         tools:layout_editor_absoluteX="100dp"
-        tools:layout_editor_absoluteY="191dp"/>
+        tools:layout_editor_absoluteY="191dp" />
 
     <EditText
         android:id="@+id/emailRegister"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:hint="e-Mail"
         android:layout_below="@id/codiceFiscale"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="15dp"
+        android:ems="10"
+        android:hint="@string/email"
+        android:inputType="textPersonName"
         tools:layout_editor_absoluteX="102dp"
-        tools:layout_editor_absoluteY="265dp" />
+        tools:layout_editor_absoluteY="265dp"
+        tools:ignore="TextFields" />
 
     <EditText
+        android:id="@+id/username"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/username"
+        android:layout_below="@id/emailRegister"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="15dp"
         android:ems="10"
-        android:hint="Username"
-        android:layout_below="@id/emailRegister"
-        android:layout_centerHorizontal="true" />
+        android:hint="@string/username" />
 
     <EditText
         android:id="@+id/pswRegister"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="Password"
-        android:ems="10"
         android:layout_below="@id/username"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="15dp"
+        android:ems="10"
+        android:hint="@string/password"
         android:inputType="textPassword"
         tools:layout_editor_absoluteX="100dp"
         tools:layout_editor_absoluteY="343dp" />
@@ -110,36 +100,38 @@
         android:id="@+id/psWConfirm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="10"
         android:layout_below="@id/pswRegister"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="15dp"
+        android:ems="10"
         android:hint="@string/confermapsw"
         android:inputType="textPassword"
         tools:layout_editor_absoluteX="102dp"
         tools:layout_editor_absoluteY="414dp" />
 
     <Button
+        android:id="@+id/loadImageButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/psWConfirm"
+        android:textSize="17sp"
+        android:layout_marginTop="15dp"
+        android:layout_centerHorizontal="true"
+        android:hint="@string/carica_immagine_del_profilo" />
+
+    <Button
         android:id="@+id/signupBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/confermareg"
-        android:layout_below="@id/psWConfirm"
+        android:layout_below="@id/loadImageButton"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="20dp"
         android:layout_marginLeft="20dp"
-        android:layout_centerHorizontal="false"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="30dp"
+        android:textSize="30sp"
+        android:text="@string/confermareg"
         tools:layout_editor_absoluteX="105dp"
         tools:layout_editor_absoluteY="514dp" />
-
-    <Button
-        android:id="@+id/signinActBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/signupBtn"
-        android:layout_alignRight="@+id/signupBtn"
-        android:layout_marginLeft="200dp"
-        android:layout_marginRight="-165dp"
-        android:text="@string/login" />
 
 
 </RelativeLayout>

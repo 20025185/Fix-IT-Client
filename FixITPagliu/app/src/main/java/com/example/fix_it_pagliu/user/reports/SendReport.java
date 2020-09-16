@@ -1,5 +1,6 @@
 package com.example.fix_it_pagliu.user.reports;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
@@ -7,16 +8,13 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.location.Location;
 import android.os.Bundle;
-import android.util.Log;
+
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -30,8 +28,6 @@ import com.example.fix_it_pagliu.user.UserMenu;
 import com.example.fix_it_pagliu.R;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
@@ -39,18 +35,18 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Objects;
 
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 
 public class SendReport extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener, NavigationView.OnNavigationItemSelectedListener {
-    private final String TAG = "[SendReport] : ";
+    //private final String TAG = "[SendReport] : ";
     private String tipoSegnalazione = "undefined";
     private boolean socialDiffusion = false;
 
-
     private EditText objectEdit, dateEdit, timeEdit, placeEdit, descriptionEdit;
     private CheckBox socialCheck;
-    private Button typeButton, coordButton, sendReportButton;
+    private Button typeButton;
 
     private FusedLocationProviderClient client;
     private DatePickerDialog.OnDateSetListener mDateSetListener;
@@ -59,6 +55,7 @@ public class SendReport extends AppCompatActivity implements PopupMenu.OnMenuIte
     private FirebaseDatabase rootNode;
     private DatabaseReference dbReference;
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,14 +66,12 @@ public class SendReport extends AppCompatActivity implements PopupMenu.OnMenuIte
         timeEdit = findViewById(R.id.timeEdit);
         placeEdit = findViewById(R.id.placeEdit);
         descriptionEdit = findViewById(R.id.descriptionEdit);
-
         socialCheck = findViewById(R.id.socialCheck);
-
         typeButton = findViewById(R.id.typeButton);
-        coordButton = findViewById(R.id.getCoordsBtn);
-        sendReportButton = findViewById(R.id.inviaSegnBtn);
 
-        //  Firebase
+        Button coordButton = findViewById(R.id.getCoordsBtn);
+        Button sendReportButton = findViewById(R.id.inviaSegnBtn);
+
         rootNode = FirebaseDatabase.getInstance();
         dbReference = rootNode.getReference("reports");
 
@@ -85,99 +80,50 @@ public class SendReport extends AppCompatActivity implements PopupMenu.OnMenuIte
         client = LocationServices.getFusedLocationProviderClient(this);
 
         //  Controllo social
-        socialCheck.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (socialCheck.isChecked()) {
-                    socialDiffusion = true;
-                } else {
-                    socialDiffusion = false;
-                }
-            }
-        });
+        socialCheck.setOnClickListener(view -> socialDiffusion = socialCheck.isChecked());
 
         //  Data
-        dateEdit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showDateDialog(dateEdit);
-            }
-        });
-
-        mDateSetListener = new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker datePicker, final int year, final int month, final int day) {
-                dateEdit.setText(year + "/" + month + "/" + day);
-            }
-        };
+        dateEdit.setOnClickListener(view -> showDateDialog());
+        mDateSetListener = (datePicker, year, month, day) -> dateEdit.setText(year + "/" + month + "/" + day);
 
         //  Orario
-        timeEdit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showTimeDialog(timeEdit);
+        timeEdit.setOnClickListener(view -> showTimeDialog(timeEdit));
+        mTimeSetListener = (timePicker, hour, minute) -> timeEdit.setText(hour + ":" + minute);
+
+        //  Conoscere le coordinate correnti
+        coordButton.setOnClickListener(view -> {
+            requestPermission();
+
+            client = LocationServices.getFusedLocationProviderClient(SendReport.this);
+            if (ActivityCompat.checkSelfPermission(SendReport.this, ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                return;
             }
-        });
-
-        mTimeSetListener = new TimePickerDialog.OnTimeSetListener() {
-            @Override
-            public void onTimeSet(TimePicker timePicker, int hour, int minute) {
-                timeEdit.setText(hour + ":" + minute);
-            }
-        };
-
-        //  Coordinate correnti
-        coordButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                requestPermission();
-
-                client = LocationServices.getFusedLocationProviderClient(SendReport.this);
-                if (ActivityCompat.checkSelfPermission(SendReport.this, ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                    return;
+            client.getLastLocation().addOnSuccessListener(location -> {
+                if (location != null) {
+                    placeEdit.setText(location.getLatitude() + " " + location.getLongitude());
                 }
-                client.getLastLocation().addOnSuccessListener(new OnSuccessListener<Location>() {
-                    @Override
-                    public void onSuccess(Location location) {
-                        if (location != null) {
-                            placeEdit.setText(location.getLatitude() + " " + location.getLongitude());
-                        }
-                    }
-                });
+            });
 
-            }
         });
-
-        sendReportButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                sendReport();
-            }
-        });
-
+        sendReportButton.setOnClickListener(view -> sendReport());
     }
 
     //  Invio segnalazione
     public void sendReport() {
         if (checkCampi()) {
-            String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+            String uid = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
             String repId = rootNode.getReference("reports").push().getKey();
             Report pendingReport = new Report(uid, repId, objectEdit.getText().toString(), dateEdit.getText().toString(),
                     timeEdit.getText().toString(), placeEdit.getText().toString(),
                     socialDiffusion, descriptionEdit.getText().toString(), tipoSegnalazione);
-            Log.d(TAG, pendingReport.getStatus());
-            dbReference.child(repId).setValue(pendingReport).addOnSuccessListener(new OnSuccessListener<Void>() {
-                @Override
-                public void onSuccess(Void aVoid) {
-                    Toast.makeText(SendReport.this, "Segnalazione inviata con successo sulla piattaforma.\nUn nostro operatore prenderà in impegno la sua segnalazione.", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(SendReport.this, UserMenu.class));
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    Toast.makeText(SendReport.this, "Si è verificato un problema nell'invio della segnalazione sulla piattaforma\n", Toast.LENGTH_SHORT).show();
-                }
-            });
+
+            //Log.d(TAG, pendingReport.getStatus());
+            assert repId != null;
+
+            dbReference.child(repId).setValue(pendingReport).addOnSuccessListener(aVoid -> {
+                Toast.makeText(SendReport.this, "Segnalazione inviata con successo sulla piattaforma.\nUn nostro operatore prenderà in impegno la sua segnalazione.", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(SendReport.this, UserMenu.class));
+            }).addOnFailureListener(e -> Toast.makeText(SendReport.this, "Si è verificato un problema nell'invio della segnalazione sulla piattaforma\n", Toast.LENGTH_SHORT).show());
         }
     }
 
@@ -187,7 +133,7 @@ public class SendReport extends AppCompatActivity implements PopupMenu.OnMenuIte
                 if (!timeEdit.getText().toString().isEmpty()) {
                     if (!placeEdit.getText().toString().isEmpty() && placeEdit.getText().toString().length() >= 5) {
                         if (descriptionEdit.getText().toString().length() >= 15) {
-                            if (tipoSegnalazione != "undefined") {
+                            if (!tipoSegnalazione.equals("undefined")) {
                                 return true;
                             } else {
                                 typeButton.setError("Selezionare una tipologia valida");
@@ -256,24 +202,21 @@ public class SendReport extends AppCompatActivity implements PopupMenu.OnMenuIte
         int minute = cal.get(Calendar.MINUTE);
 
         TimePickerDialog dialog = new TimePickerDialog(SendReport.this, mTimeSetListener, hour, minute, false);
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.show();
 
-        TimePickerDialog.OnTimeSetListener timeSetListener = new TimePickerDialog.OnTimeSetListener() {
-            @Override
-            public void onTimeSet(TimePicker timePicker, int hourOfDay, int minute) {
-                cal.set(Calendar.HOUR_OF_DAY, hourOfDay);
-                cal.set(Calendar.MINUTE, minute);
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm");
-                timeEdit.setText(simpleDateFormat.format(cal));
-            }
+        TimePickerDialog.OnTimeSetListener timeSetListener = (timePicker, hourOfDay, minute1) -> {
+            cal.set(Calendar.HOUR_OF_DAY, hourOfDay);
+            cal.set(Calendar.MINUTE, minute1);
+            @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm");
+            timeEdit.setText(simpleDateFormat.format(cal));
         };
 
         new TimePickerDialog(SendReport.this, timeSetListener, cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE), false);
     }
 
     //  Menu Data
-    public void showDateDialog(final EditText dateEdit) {
+    public void showDateDialog() {
         final Calendar cal = Calendar.getInstance();
         int year = cal.get(Calendar.YEAR);
         int month = cal.get(Calendar.MONTH);
@@ -284,7 +227,7 @@ public class SendReport extends AppCompatActivity implements PopupMenu.OnMenuIte
                 mDateSetListener
                 , year, month, day);
 
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.show();
     }
 

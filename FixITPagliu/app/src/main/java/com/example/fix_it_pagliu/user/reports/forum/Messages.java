@@ -1,5 +1,6 @@
 package com.example.fix_it_pagliu.user.reports.forum;
 
+@SuppressWarnings("ALL")
 public class Messages {
     String msg;
 

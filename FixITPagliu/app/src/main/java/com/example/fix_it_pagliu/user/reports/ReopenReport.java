@@ -1,7 +1,6 @@
 package com.example.fix_it_pagliu.user.reports;
 
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -18,18 +17,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class ReopenReport extends AppCompatActivity {
-    private final String TAG = "[Reopen Report] : ";
-    private String repID;
-
-    //  XML
     private EditText textRequest;
-    private Button buttonSend;
 
-    //  Utils
+    private String repID;
     private boolean unRequested = true;
 
-    //  Firebase
-    private FirebaseDatabase database;
     private DatabaseReference dbr;
 
     @Override
@@ -37,15 +29,12 @@ public class ReopenReport extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reopen_report);
 
-        //  Retrieve ReportID
+        textRequest = findViewById(R.id.textRequest);
+        Button buttonSend = findViewById(R.id.sendRequest);
+
         retrieveReportID();
 
-        //  XML
-        textRequest = findViewById(R.id.textRequest);
-        buttonSend = findViewById(R.id.sendRequest);
-
-        //  Firebase
-        database = FirebaseDatabase.getInstance();
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
         dbr = database.getReference("reports").child(repID);
 
         dbr.addValueEventListener(new ValueEventListener() {
@@ -62,14 +51,11 @@ public class ReopenReport extends AppCompatActivity {
             }
         });
 
-        buttonSend.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (!textRequest.getText().toString().isEmpty() && unRequested) {
-                    dbr.child("request").setValue(textRequest.getText().toString());
-                } else {
-                    Toast.makeText(ReopenReport.this, "Impossibile, richiesta già effettuata.", Toast.LENGTH_SHORT).show();
-                }
+        buttonSend.setOnClickListener(view -> {
+            if (!textRequest.getText().toString().isEmpty() && unRequested) {
+                dbr.child("request").setValue(textRequest.getText().toString());
+            } else {
+                Toast.makeText(ReopenReport.this, "Impossibile, richiesta già effettuata.", Toast.LENGTH_SHORT).show();
             }
         });
 

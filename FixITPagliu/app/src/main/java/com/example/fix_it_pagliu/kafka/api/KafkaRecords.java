@@ -9,10 +9,6 @@ public class KafkaRecords {
     @Expose
     private List<Records> recordsList = null;
 
-    public List<Records> getRecordsList() {
-        return recordsList;
-    }
-
     public void setRecordsList(List<Records> recordsList) {
         this.recordsList = recordsList;
     }

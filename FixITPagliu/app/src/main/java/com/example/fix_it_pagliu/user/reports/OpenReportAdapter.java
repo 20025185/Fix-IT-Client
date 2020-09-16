@@ -2,7 +2,7 @@ package com.example.fix_it_pagliu.user.reports;
 
 import android.content.Context;
 import android.content.Intent;
-import android.text.Spannable;
+import android.graphics.Color;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
 import android.view.LayoutInflater;
@@ -38,15 +38,21 @@ public class OpenReportAdapter extends FirebaseRecyclerAdapter<OReport, OpenRepo
         holder.repID.setText(id);
         holder.repDate.setText(report.getDate());
         holder.repDesc.setText(report.getDescription());
+        holder.repStatus.setText(report.getStatus());
 
-        holder.repID.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(oldInstance, BidirectionalForum.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                intent.putExtra("REP_ID", report.getId());
-                oldInstance.startActivities(new Intent[]{intent});
-            }
+        if (holder.repStatus.getText().equals("Aperta")) {
+            holder.repStatus.setTextColor(Color.parseColor("#239423"));
+        } else if (holder.repStatus.getText().equals("Chiusa")) {
+            holder.repStatus.setTextColor(Color.RED);
+        } else if (holder.repStatus.getText().equals("Pending")) {
+            holder.repStatus.setTextColor(Color.YELLOW);
+        }
+
+        holder.repID.setOnClickListener(view -> {
+            Intent intent = new Intent(oldInstance, BidirectionalForum.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.putExtra("REP_ID", report.getId());
+            oldInstance.startActivities(new Intent[]{intent});
         });
     }
 
@@ -60,7 +66,7 @@ public class OpenReportAdapter extends FirebaseRecyclerAdapter<OReport, OpenRepo
     }
 
     static class ReportViewHolder extends RecyclerView.ViewHolder {
-        TextView repObj, repID, repDate, repDesc;
+        TextView repObj, repID, repDate, repDesc, repStatus;
 
         public ReportViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -69,6 +75,7 @@ public class OpenReportAdapter extends FirebaseRecyclerAdapter<OReport, OpenRepo
             repID = itemView.findViewById(R.id.repID);
             repDate = itemView.findViewById(R.id.repDate);
             repDesc = itemView.findViewById(R.id.repDesc);
+            repStatus = itemView.findViewById(R.id.repStatus);
 
         }
     }

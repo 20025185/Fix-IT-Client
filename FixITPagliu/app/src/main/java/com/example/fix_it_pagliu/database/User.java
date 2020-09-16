@@ -1,44 +1,38 @@
 package com.example.fix_it_pagliu.database;
 
-import java.util.Date;
-
+@SuppressWarnings("ALL")
 public class User {
-
-    public User(String fullname, String surname, String fiscalCode, String birthday, String email) {
+    public User(String username, String fullname, String surname, String uid, String fiscalCode, String birthday, String email, String imageURL) {
+        this.username = username;
         this.fullname = fullname;
         this.surname = surname;
+        this.uid = uid;
         this.fiscalCode = fiscalCode;
         this.birthday = birthday;
         this.email = email;
-        this.role = "user";
+        this.imageURL = imageURL;
     }
 
-    public String getFullname() {
-        return fullname;
+    @Override
+    public String toString() {
+        return "User{" +
+                "fullname='" + fullname + '\'' +
+                ", surname='" + surname + '\'' +
+                ", fiscalCode='" + fiscalCode + '\'' +
+                ", birthday='" + birthday + '\'' +
+                ", email='" + email + '\'' +
+                ", role='" + role + '\'' +
+                ", imageURL='" + imageURL + '\'' +
+                '}';
     }
 
-    public String getSurname() {
-        return surname;
-    }
-
-    public String getFiscalCode() {
-        return fiscalCode;
-    }
-
-    public String getBirthday() {
-        return birthday;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public String getRole() { return role; }
-
+    private String username;
     private String fullname;
     private String surname;
     private String fiscalCode;
     private String birthday;
     private String email;
     private String role;
+    private String imageURL;
+    private String uid;
 }

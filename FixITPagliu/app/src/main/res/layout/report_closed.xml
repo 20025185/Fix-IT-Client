@@ -60,6 +60,16 @@
         app:layout_constraintLeft_toLeftOf="@id/repID"
         app:layout_constraintTop_toBottomOf="@id/repID" />
 
+    <TextView
+        android:id="@+id/repType"
+        android:layout_width="175dp"
+        android:layout_height="wrap_content"
+        android:gravity="left"
+        android:text="@string/undefined"
+        app:layout_constraintLeft_toLeftOf="@id/repID"
+        app:layout_constraintTop_toBottomOf="@id/repDesc"
+        />
+
     <Button
         android:id="@+id/repVote"
         android:layout_width="wrap_content"

@@ -5,6 +5,8 @@ public class OReport {
     String id;
     String description;
     String date;
+    String status;
+    String type;
 
     public OReport() {
     }
@@ -16,7 +18,13 @@ public class OReport {
                 ", id='" + id + '\'' +
                 ", description='" + description + '\'' +
                 ", date='" + date + '\'' +
+                ", status='" + status + '\'' +
+                ", type='" + type + '\'' +
                 '}';
+    }
+
+    public String getType() {
+        return type;
     }
 
     public String getObject() {
@@ -29,6 +37,10 @@ public class OReport {
 
     public String getDescription() {
         return description;
+    }
+
+    public String getStatus() {
+        return status.split("_")[0];
     }
 
     public String getDate() {

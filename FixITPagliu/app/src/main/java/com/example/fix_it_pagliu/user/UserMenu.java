@@ -6,22 +6,20 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
 
-
 import com.example.fix_it_pagliu.R;
-import com.example.fix_it_pagliu.employee.EmployeeMenu;
 import com.example.fix_it_pagliu.user.auth.Login;
 import com.example.fix_it_pagliu.user.map_and_stats.MapZone;
 import com.example.fix_it_pagliu.user.map_and_stats.StatsReports;
@@ -29,9 +27,6 @@ import com.example.fix_it_pagliu.user.reports.ClosedReports;
 import com.example.fix_it_pagliu.user.reports.OpenReports;
 import com.example.fix_it_pagliu.user.news.PostListActivity;
 import com.example.fix_it_pagliu.user.reports.SendReport;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -40,55 +35,45 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
+
+import static java.util.Objects.requireNonNull;
 
 public class UserMenu extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private final static String TAG = "[UserMenu] : ";
-    //  Firebase
-    private FirebaseDatabase rootNode;
+
+    private DrawerLayout drawerLayout;
+    private ImageView profileImg;
+    private TextView nomeUser, emailUser,
+            roleUser, fiscalUser, birthdayUser;
+
     private DatabaseReference databaseReference;
     private FirebaseAuth fAuth;
     private FirebaseUser currentUser;
-    private static String currentUid;
-    private static String currentMail;
-
-    //  XML
-    private DrawerLayout drawerLayout;
-    private NavigationView navigationView;
-    private Toolbar toolbar;
-    private Menu menu;
-    private TextView verifyMsg;
-    private Button resendCode;
-    private TextView nomeUser, emailUser,
-            roleUser, fiscalUser, birthdayUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_menu);
 
-        //  XML
         nomeUser = findViewById(R.id.nomeUser);
         emailUser = findViewById(R.id.emailUser);
         roleUser = findViewById(R.id.roleUser);
         fiscalUser = findViewById(R.id.fiscalUser);
         birthdayUser = findViewById(R.id.birthdayUser);
-        resendCode = findViewById(R.id.resendCode);
-        verifyMsg = findViewById(R.id.emailNotVerified);
-
-        //  Navigation hooks (XML)
+        profileImg = findViewById(R.id.profileImg);
+        Button resendCode = findViewById(R.id.resendCode);
+        TextView verifyMsg = findViewById(R.id.emailNotVerified);
         drawerLayout = findViewById(R.id.drawer_layout);
-        navigationView = findViewById(R.id.nav_view);
-        toolbar = findViewById(R.id.toolbar);
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        Toolbar toolbar = findViewById(R.id.toolbar);
 
-        //  Firebase
         fAuth = FirebaseAuth.getInstance();
-        rootNode = FirebaseDatabase.getInstance();
+        FirebaseDatabase rootNode = FirebaseDatabase.getInstance();
         databaseReference = rootNode.getReference("users");
 
-        //  Toolbar
         setSupportActionBar(toolbar);
 
-        //  Navigation Drawer Menu
         navigationView.bringToFront();
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(toggle);
@@ -96,27 +81,13 @@ public class UserMenu extends AppCompatActivity implements NavigationView.OnNavi
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.setCheckedItem(R.id.nav_profile);
 
-
-        //  Email verification
-        if (!fAuth.getCurrentUser().isEmailVerified() && !roleUser.getText().equals("Impiegato")) {
+        if (!requireNonNull(fAuth.getCurrentUser()).isEmailVerified() && !roleUser.getText().equals("Impiegato")) {
             verifyMsg.setVisibility(View.VISIBLE);
             resendCode.setVisibility(View.VISIBLE);
-            resendCode.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    final Task<Void> voidTask = fAuth.getCurrentUser().sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void aVoid) {
-                            Toast.makeText(UserMenu.this, "È stata inviata una e-Mail di verifica.", Toast.LENGTH_SHORT).show();
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(UserMenu.this, "Errore nell'invio della e-Mail.", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                }
-            });
+            resendCode.setOnClickListener(view -> fAuth.getCurrentUser()
+                    .sendEmailVerification()
+                    .addOnSuccessListener(aVoid -> Toast.makeText(UserMenu.this, "È stata inviata una e-Mail di verifica.", Toast.LENGTH_SHORT).show())
+                    .addOnFailureListener(e -> Toast.makeText(UserMenu.this, "Errore nell'invio della e-Mail.", Toast.LENGTH_SHORT).show()));
         }
 
     }
@@ -135,30 +106,27 @@ public class UserMenu extends AppCompatActivity implements NavigationView.OnNavi
         super.onStart();
 
         currentUser = fAuth.getCurrentUser();
-        currentUid = currentUser.getUid();
+        assert currentUser != null;
+        String currentUid = currentUser.getUid();
 
         if (currentUser == null)
             logout();
 
-
-
-        currentMail = currentUser.getEmail();
+        String currentMail = currentUser.getEmail();
         emailUser.setText(currentMail);
 
-        menu = navigationView.getMenu();
         ValueEventListener valueEventListener = new ValueEventListener() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.child("role").getValue(String.class).equals("user")) {
-                    roleUser.setText("Utente standard");
-                } else {
-                    roleUser.setText("Impiegato");
-                    startActivity(new Intent(getApplicationContext(), EmployeeMenu.class));
-                }
+                if (dataSnapshot.child("fullname").getValue() == null)
+                    logout();
 
+                roleUser.setText("Utente standard");
                 nomeUser.setText(dataSnapshot.child("fullname").getValue(String.class) + " " + dataSnapshot.child("surname").getValue(String.class));
                 fiscalUser.setText(dataSnapshot.child("fiscalCode").getValue(String.class));
                 birthdayUser.setText(dataSnapshot.child("birthday").getValue(String.class));
+                Picasso.get().load(requireNonNull(dataSnapshot.child("imageURL").getValue()).toString()).into(profileImg);
             }
 
             @Override

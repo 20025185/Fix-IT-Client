@@ -1,5 +1,6 @@
 package com.example.fix_it_pagliu.user.news;
 
+@SuppressWarnings("NullableProblems")
 public class Post {
     String object;
     String uid;
@@ -9,14 +10,6 @@ public class Post {
     String date;
 
     public Post() {
-    }
-
-    public String getUid() {
-        return uid;
-    }
-
-    public String getStatus() {
-        return status;
     }
 
     public String getId() {
@@ -36,23 +29,11 @@ public class Post {
         return description;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     public String getObject() {
         return object;
     }
 
-    public void setObject(String object) {
-        this.object = object;
-    }
-
     public String getDate() {
         return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
     }
 }

@@ -2,7 +2,6 @@ package com.example.fix_it_pagliu.user.reports.forum;
 
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -24,24 +23,20 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Objects;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class BidirectionalForum extends AppCompatActivity {
-    private String TAG = "[Bidirectional Chat] : ";
+    private EditText textToSend;
+    private RecyclerView recyclerView;
+
     private String fullName = null;
     private String repID;
     private int msgIndex = 0;
-    private int numOfMsg;
-
-    //  XML
-    private EditText textToSend;
-    private Button sendMsg;
-    private RecyclerView recyclerView;
-
-    //  Utils
     private ArrayList<Messages> messageList;
-    private Handler handler;
 
-    //  Firebase&Co
     private MessageAdapter messageAdapter;
     private FirebaseUser firebaseUser;
     private DatabaseReference databaseReference;
@@ -53,8 +48,8 @@ public class BidirectionalForum extends AppCompatActivity {
 
         //  XML
         textToSend = findViewById(R.id.textToSend);
-        sendMsg = findViewById(R.id.sendButton);
-        messageList = new ArrayList<Messages>();
+        Button sendMsg = findViewById(R.id.sendButton);
+        messageList = new ArrayList<>();
 
         //  Retrieving ID & CurrentUser
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -73,6 +68,10 @@ public class BidirectionalForum extends AppCompatActivity {
                 .child(repID)
                 .child("discussion");
 
+        Runnable r = this::getDataFromFirebase;
+        ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
+        scheduler.scheduleAtFixedRate(r, 0, 100, TimeUnit.MILLISECONDS);
+
         //  Showing Messages
         getDataFromFirebase();
 
@@ -80,12 +79,9 @@ public class BidirectionalForum extends AppCompatActivity {
         retrieveMsgIndex();
 
         //  Sending message
-        sendMsg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                msgIndex++;
-                sendMessage(msgIndex);
-            }
+        sendMsg.setOnClickListener(view -> {
+            msgIndex++;
+            sendMessage(msgIndex);
         });
     }
 
@@ -97,7 +93,7 @@ public class BidirectionalForum extends AppCompatActivity {
                 ClearAll();
                 for (int i = 1; i <= snapshot.getChildrenCount(); i++) {
                     Messages message = new Messages();
-                    message.setMsg(snapshot.child("msg_" + i).getValue().toString());
+                    message.setMsg(Objects.requireNonNull(snapshot.child("msg_" + i).getValue()).toString());
                     messageList.add(message);
                 }
                 messageAdapter = new MessageAdapter(getApplicationContext(), messageList);
@@ -149,7 +145,7 @@ public class BidirectionalForum extends AppCompatActivity {
             dbr_user.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    fullName = snapshot.child("fullname").getValue().toString();
+                    fullName = Objects.requireNonNull(snapshot.child("fullname").getValue()).toString();
                 }
 
                 @Override
@@ -158,13 +154,11 @@ public class BidirectionalForum extends AppCompatActivity {
                 }
             });
 
-            handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                public void run() {
-                    final String finalMsg = fullName + " : " + msg;
-                    databaseReference.child("msg_" + msgIndex).setValue(finalMsg);
-                    getDataFromFirebase();
-                }
+            Handler handler = new Handler();
+            handler.postDelayed(() -> {
+                final String finalMsg = fullName + " : " + msg;
+                databaseReference.child("msg_" + msgIndex).setValue(finalMsg);
+                getDataFromFirebase();
             }, 600);
         } else {
             Toast.makeText(BidirectionalForum.this,

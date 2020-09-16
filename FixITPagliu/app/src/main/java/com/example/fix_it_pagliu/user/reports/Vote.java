@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -32,21 +33,15 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Vote extends AppCompatActivity {
-    //  Importa vars
-    private String TAG = "[Vote] : ";
+    private final String TAG = "[Vote] : ";
     private String repID;
     private String uidKey;
     private boolean enabledRating = false;
 
-    //  XML
     private RatingBar ratingBar;
-    private Button button;
     private TextView textView;
 
-    //  Firebase
-    private FirebaseDatabase firebaseDatabase;
     private DatabaseReference dbr;
-    //  Kafka REST Proxy
     private KafkaAPI kafkaAPI;
     private Report reportToSend;
 
@@ -65,11 +60,12 @@ public class Vote extends AppCompatActivity {
         retrieveReportID();
 
         ratingBar = findViewById(R.id.ratingBar);
-        button = findViewById(R.id.sendVode);
+        Button button = findViewById(R.id.sendVode);
         textView = findViewById(R.id.grazieVoto);
         textView.setVisibility(View.INVISIBLE);
 
-        firebaseDatabase = FirebaseDatabase.getInstance();
+        //  Firebase
+        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         dbr = firebaseDatabase.getReference("reports").child(repID);
 
         dbr.addValueEventListener(new ValueEventListener() {
@@ -78,7 +74,6 @@ public class Vote extends AppCompatActivity {
                 if (snapshot.child("rating").getValue() == null) {
                     enabledRating = true;
                     textView.setVisibility(View.INVISIBLE);
-
                 } else {
                     enabledRating = false;
                     textView.setVisibility(View.VISIBLE);
@@ -97,7 +92,6 @@ public class Vote extends AppCompatActivity {
 
                 reportToSend = new Report(uidKey, repID, object, date, time, position, Boolean.getBoolean(social), description, type, "null", status, priority);
 
-
             }
 
             @Override
@@ -106,10 +100,8 @@ public class Vote extends AppCompatActivity {
             }
         });
 
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //if (enabledRating) {
+        button.setOnClickListener(view -> {
+            if (enabledRating) {
                 dbr.child("rating").setValue(ratingBar.getRating());
                 reportToSend.setRating(String.valueOf(ratingBar.getRating()));
 
@@ -126,6 +118,7 @@ public class Vote extends AppCompatActivity {
 
                 Call<Void> call = kafkaAPI.createPost(kafkaRecords);
 
+                //noinspection NullableProblems
                 call.enqueue(new Callback<Void>() {
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {
@@ -137,10 +130,8 @@ public class Vote extends AppCompatActivity {
                         Log.d(TAG, t.toString());
                     }
                 });
-
-                /*} else {
-                    Toast.makeText(Vote.this, "È già presente un tuo voto per questa segnalazione all'interno della nostra piattaforma.", Toast.LENGTH_SHORT).show();
-                }*/
+            } else {
+                Toast.makeText(Vote.this, "È già presente un tuo voto per questa segnalazione all'interno della nostra piattaforma.", Toast.LENGTH_SHORT).show();
             }
         });
     }

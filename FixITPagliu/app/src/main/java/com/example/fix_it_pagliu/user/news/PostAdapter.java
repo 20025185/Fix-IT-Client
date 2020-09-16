@@ -34,7 +34,7 @@ public class PostAdapter extends FirebaseRecyclerAdapter<Post, PostAdapter.PastV
 
     static class PastViewHolder extends RecyclerView.ViewHolder {
         TextView object, description, date;
-        TextView repObject, repID, repDate;
+        TextView repObject, repDate;
 
         public PastViewHolder(@NonNull View itemView) {
             super(itemView);
