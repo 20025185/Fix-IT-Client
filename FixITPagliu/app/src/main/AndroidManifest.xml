@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.fix_it_pagliu">
+    package="com.example.fix_it_pagliuca">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -26,24 +26,24 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <activity android:name=".user.auth.Login">
+        <activity android:name="com.application.fix_it_pagliuca.user.auth.Login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        
-        <activity android:name=".user.reports.ClosedReports" />
-        <activity android:name=".user.reports.forum.BidirectionalForum" />
-        <activity android:name=".user.reports.OpenReports" />
-        <activity android:name=".user.news.PostListActivity" />
-        <activity android:name=".user.reports.ReopenReport" />
-        <activity android:name=".user.map_and_stats.StatsReports" />
-        <activity android:name=".user.reports.Vote" />
-        <activity android:name=".user.map_and_stats.MapZone" />
-        <activity android:name=".user.reports.SendReport" />
-        <activity android:name=".user.auth.Registration" />
-        <activity android:name=".user.UserMenu" />
+
+        <activity android:name="com.application.fix_it_pagliuca.user.reports.recycle_view_menus.closed_reports_menu.ClosedReports" />
+        <activity android:name="com.application.fix_it_pagliuca.user.reports.employee_chat.BidirectionalForum" />
+        <activity android:name="com.application.fix_it_pagliuca.user.reports.recycle_view_menus.open_reports_menu.OpenReports" />
+        <activity android:name="com.application.fix_it_pagliuca.user.news.PostListActivity" />
+        <activity android:name="com.application.fix_it_pagliuca.user.reports.recycle_view_menus.closed_reports_menu.ReopenReport" />
+        <activity android:name="com.application.fix_it_pagliuca.user.extra.LocalStats" />
+        <activity android:name="com.application.fix_it_pagliuca.user.reports.recycle_view_menus.closed_reports_menu.Vote" />
+        <activity android:name="com.application.fix_it_pagliuca.user.extra.Map" />
+        <activity android:name="com.application.fix_it_pagliuca.user.reports.send_report_menu.SendReport" />
+        <activity android:name="com.application.fix_it_pagliuca.user.auth.Registration" />
+        <activity android:name="com.application.fix_it_pagliuca.user.dashboard.Dashboard" />
     </application>
 
 </manifest>

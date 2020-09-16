@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".user.news.PostListActivity">
+    tools:context="com.example.fix_it_pagliuca.com.application.fix_it_pagliuca.user.news.PostListActivity">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerPost"
