@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name"></string>
+    <string name="app_name">FIX IT</string>
     <string name="confermapsw">Conferma Password</string>
     <string name="confermareg">INVIA</string>
     <string name="email">e-Mail</string>
@@ -36,12 +36,12 @@
     <string name="missing_description">Missing_Description</string>
     <string name="missing_date">Missing Date</string>
     <string name="l_e_mail_non_verificata">L\'e-mail non è verificata</string>
-    <string name="resend">resend</string>
+    <string name="resend">RESEND</string>
     <string name="nome">Nome</string>
     <string name="nullStr">null</string>
     <string name="e_mail">e-mail</string>
     <string name="null_invalid_ptr">null@invalid.ptr</string>
-    <string name="tipo">Tipo</string>
+    <string name="tipo">Tipologia</string>
     <string name="invalid">invalid</string>
     <string name="dd_mm_yyyy">DD/MM/YYYY</string>
     <string name="pannello_di_controllo">Pannello di controllo</string>
@@ -75,7 +75,7 @@
     <string name="edit">Edit</string>
     <string name="apri_nsegnalazione">Apri\nSegnalazione</string>
     <string name="undefined">Undefined</string>
-    <string name="carica_immagine_del_profilo">Carica immagine del profilo</string>
+    <string name="carica_immagine_del_profilo">Immagine del profilo</string>
     <string name="cognome">Cognome</string>
     <string name="username">Username</string>
     <string name="password">Password</string>
@@ -87,4 +87,15 @@
     <string name="passowrdRegex">^(?=.*\\d).{6,15}$</string>
     <string name="signup">Signup</string>
     <string name="sign_in">Sign in</string>
+    <string name="registrati">Registrati</string>
+    <string name="log_in">Log in</string>
+    <string name="it_s_a_hammer">It\'s a hammer</string>
+    <string name="la_tua_foto_profilo">La tua foto profilo</string>
+    <string name="segnalazione">SEGNALAZIONE</string>
+    <string name="ultime_notizie_caps">ULTIME NOTIZIE</string>
+    <string name="segnalazioni_aperte_caps">SEGNALAZIONI APERTE</string>
+    <string name="segnalazioni_chiuse_caps">SEGNALAZIONI CHIUSE</string>
+    <string name="riapri_nsegnalazione">Riapri\nSegnalazione</string>
+    <string name="registrazione_caps">REGISTRAZIONE</string>
+    <string name="dashboard_caps">DASHBOARD</string>
 </resources>

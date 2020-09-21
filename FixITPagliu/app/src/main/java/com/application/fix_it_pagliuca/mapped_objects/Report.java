@@ -14,9 +14,10 @@ public class Report {
     private String rating;
     private String status = "undefined";
     private String priority = "-1";
+    private String attachmentPath;
 
     public Report(String uid, String id, String object, String date, String time, String position,
-                  boolean social, String description, String type) {
+                  boolean social, String description, String type, String attachmentPath) {
         this.uid = uid;
         this.id = id;
         this.object = object;
@@ -28,6 +29,7 @@ public class Report {
         this.type = type;
         this.status = "Pending_" + uid;
         this.priority = "0";
+        this.attachmentPath = attachmentPath;
     }
 
     @Override
@@ -42,8 +44,10 @@ public class Report {
                 ", social=" + social +
                 ", description='" + description + '\'' +
                 ", type='" + type + '\'' +
+                ", rating='" + rating + '\'' +
                 ", status='" + status + '\'' +
                 ", priority='" + priority + '\'' +
+                ", attachmentPath='" + attachmentPath + '\'' +
                 '}';
     }
 
@@ -198,7 +202,11 @@ public class Report {
         return id;
     }
 
-    //private Image img = new Image("C:\\Users\\Manuel\\Pictures\\Immagine.png");
+    public String getAttachmentPath() {
+        return attachmentPath;
+    }
 
-    //  Allegato
+    public void setAttachmentPath(String attachmentPath) {
+        this.attachmentPath = attachmentPath;
+    }
 }

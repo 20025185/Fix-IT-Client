@@ -9,7 +9,7 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
-        android:allowBackup="true"
+        android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
@@ -29,21 +29,46 @@
         <activity android:name="com.application.fix_it_pagliuca.user.auth.Login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
 
-        <activity android:name="com.application.fix_it_pagliuca.user.reports.recycle_view_menus.closed_reports_menu.ClosedReports" />
-        <activity android:name="com.application.fix_it_pagliuca.user.reports.employee_chat.BidirectionalForum" />
-        <activity android:name="com.application.fix_it_pagliuca.user.reports.recycle_view_menus.open_reports_menu.OpenReports" />
-        <activity android:name="com.application.fix_it_pagliuca.user.news.PostListActivity" />
-        <activity android:name="com.application.fix_it_pagliuca.user.reports.recycle_view_menus.closed_reports_menu.ReopenReport" />
-        <activity android:name="com.application.fix_it_pagliuca.user.extra.LocalStats" />
-        <activity android:name="com.application.fix_it_pagliuca.user.reports.recycle_view_menus.closed_reports_menu.Vote" />
-        <activity android:name="com.application.fix_it_pagliuca.user.extra.Map" />
-        <activity android:name="com.application.fix_it_pagliuca.user.reports.send_report_menu.SendReport" />
-        <activity android:name="com.application.fix_it_pagliuca.user.auth.Registration" />
-        <activity android:name="com.application.fix_it_pagliuca.user.dashboard.Dashboard" />
+        <activity
+            android:name="com.application.fix_it_pagliuca.user.reports.recycle_view_menus.closed_reports_menu.ClosedReports"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.application.fix_it_pagliuca.user.reports.employee_chat.BidirectionalForum"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.application.fix_it_pagliuca.user.reports.recycle_view_menus.open_reports_menu.OpenReports"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.application.fix_it_pagliuca.user.news.PostListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.application.fix_it_pagliuca.user.reports.recycle_view_menus.closed_reports_menu.ReopenReport"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.application.fix_it_pagliuca.user.extra.LocalStatistics"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.application.fix_it_pagliuca.user.reports.recycle_view_menus.closed_reports_menu.Vote"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.application.fix_it_pagliuca.user.extra.Map"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.application.fix_it_pagliuca.user.reports.send_report_menu.SendReport"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.application.fix_it_pagliuca.user.auth.Registration"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.application.fix_it_pagliuca.user.dashboard.Dashboard"
+            android:screenOrientation="portrait" />
+
     </application>
 
 </manifest>

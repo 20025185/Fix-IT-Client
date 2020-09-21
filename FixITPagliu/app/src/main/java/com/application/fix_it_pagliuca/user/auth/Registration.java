@@ -1,5 +1,6 @@
 package com.application.fix_it_pagliuca.user.auth;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -39,11 +40,14 @@ public class Registration extends AppCompatActivity {
     private static final String TAG = "[Registration] : ";
     private static final int PICK_IMAGE_REQUEST = 71;
     private EditText m_FullName, m_Surname, m_Birthday, m_CodiceFiscale, m_Username, m_Email, m_Password, m_PasswordConf;
+    private Button m_loadImageBtn;
     private DatePickerDialog.OnDateSetListener mDateSetListener;
     private DatabaseReference databaseReference;
     private StorageReference storageReference;
+    private String imageUUID;
     private Uri imageURI;
     private FirebaseAuth fAuth;
+    private boolean firstLoad = true;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -61,7 +65,7 @@ public class Registration extends AppCompatActivity {
         m_Password = findViewById(R.id.pswRegister);
         m_PasswordConf = findViewById(R.id.psWConfirm);
         Button m_RegisterBtn = findViewById(R.id.signupBtn);
-        Button m_loadImageBtn = findViewById(R.id.loadImageButton);
+        m_loadImageBtn = findViewById(R.id.loadImageButton);
 
         fAuth = FirebaseAuth.getInstance();
         FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -71,14 +75,19 @@ public class Registration extends AppCompatActivity {
         if (fAuth.getCurrentUser() != null) {
             startActivity(new Intent(getApplicationContext(), Dashboard.class));
             finish();
-        }
+        } else {
+            fAuth.signInAnonymously().addOnSuccessListener(authResult -> {
+                m_Birthday.setOnClickListener(view -> handleBirthdayDialog());
+                mDateSetListener = (datePicker, year, month, day) -> m_Birthday.setText(day + "/" + month + "/" + year);
+                m_RegisterBtn.setOnClickListener(v -> handleRegisterButton());
+                m_loadImageBtn.setOnClickListener(v -> selectImage());
+            }).addOnFailureListener(e -> {
 
-        m_Birthday.setOnClickListener(view -> handleBirthdayDialog());
-        mDateSetListener = (datePicker, year, month, day) -> m_Birthday.setText(day + "/" + month + "/" + year);
-        m_RegisterBtn.setOnClickListener(v -> handleRegisterButton());
-        m_loadImageBtn.setOnClickListener(v -> selectImage());
+            });
+        }
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -91,7 +100,7 @@ public class Registration extends AppCompatActivity {
                 progressDialog.show();
                 storageReference = FirebaseStorage.getInstance().getReference("userImgs");
 
-                String imageUUID = UUID.randomUUID().toString();
+                imageUUID = UUID.randomUUID().toString();
                 storageReference = storageReference.child(imageUUID);
 
                 storageReference.putFile(filePath)
@@ -102,6 +111,9 @@ public class Registration extends AppCompatActivity {
                             });
                             progressDialog.dismiss();
                             Toast.makeText(Registration.this, "Immagine caricata con successo", Toast.LENGTH_SHORT).show();
+                            m_loadImageBtn.setBackgroundColor(Color.parseColor("#34e33d"));
+                            m_loadImageBtn.setText("Cambia immagine del profilo");
+                            firstLoad = false;
                         })
                         .addOnFailureListener(e -> {
                             progressDialog.dismiss();
@@ -136,14 +148,19 @@ public class Registration extends AppCompatActivity {
                         email,
                         imageURI.toString());
 
-                databaseReference.child(uid).setValue(user).addOnSuccessListener(aVoid -> {
-                    Log.d(TAG, "Utente creato sulla piattaforma RealTimeDatabase " + user.toString());
-                    Toast.makeText(Registration.this, "Utente creato sulla piattaforma, è necessario attivare l'account.\n", Toast.LENGTH_SHORT).show();
-                }).addOnFailureListener(e -> Toast.makeText(Registration.this, "Si è stato un errore nella creazione dell'utente.\n", Toast.LENGTH_SHORT).show());
+                databaseReference
+                        .child(uid)
+                        .setValue(user)
+                        .addOnSuccessListener(aVoid -> {
+                            Log.d(TAG, "Utente creato sulla piattaforma RealTimeDatabase " + user.toString());
+                            Toast.makeText(Registration.this, "Utente creato sulla piattaforma, è necessario attivare l'account.\n", Toast.LENGTH_SHORT).show();
+                        }).addOnFailureListener(e -> Toast.makeText(Registration.this, "Si è stato un errore nella creazione dell'utente.\n", Toast.LENGTH_SHORT).show());
 
                 startActivity(new Intent(getApplicationContext(), Dashboard.class));
             } else {
-                Toast.makeText(Registration.this, "Errore\n\"" + Objects.requireNonNull(task.getException()).getMessage() + "\"", Toast.LENGTH_SHORT).show();
+                Toast.makeText(Registration.this,
+                        "Errore\n\"" + Objects.requireNonNull(task.getException()).getMessage() + "\"",
+                        Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -282,10 +299,19 @@ public class Registration extends AppCompatActivity {
     }
 
     private void selectImage() {
+        System.out.println("fuori firstload");
+        if (!firstLoad) {
+            System.out.println("dentro firstload");
+            storageReference = FirebaseStorage.getInstance().getReference("userImgs");
+            storageReference.child(imageUUID).delete().addOnSuccessListener(aVoid -> Log.d(TAG, "L'immagine con nome " + imageUUID + ", è stata rimossa da Firebase Storage. Sarà sostituita con la prossima selezionata"));
+
+        }
+
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
+        startActivityForResult(Intent.createChooser(intent,
+                "Select Picture"), PICK_IMAGE_REQUEST);
     }
 
 }

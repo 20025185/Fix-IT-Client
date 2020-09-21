@@ -3,22 +3,35 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:layout_editor_absoluteX="0dp"
-    tools:layout_editor_absoluteY="81dp">
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="85dp"
+        android:background="@color/colorPrimaryDark"
+        android:gravity="center"
+        android:paddingTop="20dp"
+        android:text="@string/segnalazione"
+        android:textColor="@color/colorBackground"
+        android:textSize="45sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/oggettoEdit"
         android:layout_width="350dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:backgroundTint="#FF85de9d"
+        android:layout_marginTop="15dp"
+        android:backgroundTint="#ed2424"
         android:hint="@string/oggetto"
         android:importantForAutofill="no"
+        android:inputType="text"
         android:maxLines="1"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/header"
         tools:targetApi="lollipop" />
 
     <EditText
@@ -26,40 +39,49 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:backgroundTint="#FF85de9d"
+        android:backgroundTint="#ed2424"
         android:focusable="false"
         android:hint="@string/data"
+        android:importantForAutofill="no"
+        android:inputType="date"
         app:layout_constraintLeft_toLeftOf="@+id/oggettoEdit"
-        app:layout_constraintTop_toBottomOf="@+id/oggettoEdit" />
+        app:layout_constraintTop_toBottomOf="@+id/oggettoEdit"
+        tools:targetApi="lollipop" />
 
     <EditText
         android:id="@+id/timeEdit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="80dp"
+        android:layout_marginStart="0dp"
         android:layout_marginLeft="80dp"
         android:layout_marginTop="20dp"
-        android:backgroundTint="#FF85de9d"
+        android:layout_marginRight="200dp"
+        android:backgroundTint="#ed2424"
         android:focusable="false"
-
         android:hint="@string/orario"
+        android:importantForAutofill="no"
+        android:inputType="datetime"
         app:layout_constraintLeft_toRightOf="@id/dataEdit"
         app:layout_constraintRight_toRightOf="@id/oggettoEdit"
         app:layout_constraintTop_toBottomOf="@id/oggettoEdit"
         tools:layout_editor_absoluteX="320dp"
-        tools:layout_editor_absoluteY="85dp" />
+        tools:layout_editor_absoluteY="85dp"
+        tools:targetApi="lollipop" />
 
     <EditText
         android:id="@+id/placeEdit"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:backgroundTint="#FF85de9d"
+        android:backgroundTint="#ed2424"
         android:focusable="true"
         android:hint="@string/posizione"
+        android:importantForAutofill="no"
+        android:inputType="numberSigned"
         app:layout_constraintHorizontal_bias="0.012"
         app:layout_constraintLeft_toLeftOf="@+id/oggettoEdit"
-        app:layout_constraintTop_toBottomOf="@+id/dataEdit" />
+        app:layout_constraintTop_toBottomOf="@+id/dataEdit"
+        tools:targetApi="lollipop" />
 
     <Button
         android:id="@+id/getCoordsBtn"
@@ -78,73 +100,87 @@
         android:layout_width="350dp"
         android:layout_height="200dp"
         android:layout_marginTop="20dp"
-        android:background="#FF85de9d"
+        android:background="@drawable/rounded_edit_text"
         android:gravity="top"
         android:hint="@string/descrizione_della_problematica"
+        android:importantForAutofill="no"
+        android:inputType="textMultiLine"
+        android:paddingStart="15dp"
+        android:paddingLeft="15dp"
+        android:paddingTop="10dp"
+        android:paddingRight="15dp"
+        android:paddingBottom="10dp"
         android:textColor="#000000"
         app:layout_constraintLeft_toLeftOf="@id/oggettoEdit"
         app:layout_constraintRight_toRightOf="@id/oggettoEdit"
-        app:layout_constraintTop_toBottomOf="@id/placeEdit" />
+        app:layout_constraintTop_toBottomOf="@id/placeEdit"
+        tools:ignore="RtlSymmetry" />
 
     <Button
         android:id="@+id/typeButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
-        android:background="@android:color/darker_gray"
+        android:layout_marginLeft="80dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/rounded_button"
         android:onClick="showTipo"
         android:text="@string/tipo"
-        app:layout_constraintLeft_toLeftOf="@+id/oggettoEdit"
-        app:layout_constraintTop_toBottomOf="@+id/descriptionEdit" />
+        app:layout_constraintLeft_toRightOf="@+id/timeEdit"
+        app:layout_constraintTop_toBottomOf="@+id/oggettoEdit" />
 
     <CheckBox
         android:id="@+id/socialCheck"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="260dp"
-        android:layout_marginLeft="260dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginLeft="50dp"
         android:layout_marginTop="32dp"
-        android:buttonTint="#FF85de9d"
+        android:buttonTint="@color/colorPrimaryDark"
         android:text="@string/social"
-        app:layout_constraintLeft_toLeftOf="@+id/oggettoEdit"
+        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/descriptionEdit" />
+        app:layout_constraintTop_toBottomOf="@+id/descriptionEdit"
+        tools:targetApi="lollipop" />
 
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
         android:layout_marginLeft="32dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="35dp"
         android:text="@string/allegato"
         android:textColor="#000000"
         app:layout_constraintLeft_toLeftOf="@+id/allegatoImg"
-        app:layout_constraintTop_toBottomOf="@id/socialCheck" />
+        app:layout_constraintTop_toBottomOf="@id/descriptionEdit"/>
 
-    <!--<ImageView
-       android:id="@+id/allegatoImg"
-       android:layout_width="wrap_content"
-       android:layout_height="wrap_content"
-       android:layout_marginStart="260dp"
-       android:layout_marginLeft="260dp"
-       android:layout_marginTop="8dp"
-       android:background="@drawable/ic_allegato"
-      android:onClick="loadAttachment"  to fix quando farai l'allegato
-       app:layout_constraintLeft_toLeftOf="parent"
-       app:layout_constraintRight_toRightOf="parent"
-       app:layout_constraintStart_toStartOf="parent"
-       app:layout_constraintTop_toBottomOf="@id/socialCheck" /> -->
+    <ImageView
+        android:id="@+id/allegatoImg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="260dp"
+        android:layout_marginLeft="260dp"
+        android:layout_marginTop="35dp"
+        android:background="@drawable/ic_allegato"
+        android:onClick="loadAttachment"
+        app:layout_constraintLeft_toLeftOf="@id/socialCheck"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/descriptionEdit"
+        tools:ignore="ContentDescription" />
 
     <Button
         android:id="@+id/inviaSegnBtn"
         android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:background="#e3594f"
+        android:layout_height="60dp"
+        android:layout_marginTop="120dp"
+        android:background="@color/colorPrimaryDark"
         android:text="@string/invia_segnalazione"
+        android:textSize="20sp"
+        android:textColor="@color/colorBackground"
         app:layout_constraintLeft_toLeftOf="@+id/oggettoEdit"
         app:layout_constraintRight_toRightOf="@id/oggettoEdit"
-        app:layout_constraintTop_toBottomOf="@+id/typeButton" />
+        app:layout_constraintTop_toBottomOf="@+id/descriptionEdit" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,93 +1,126 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mainLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.fix_it_pagliuca.com.application.fix_it_pagliuca.user.auth.Login">
+    android:focusableInTouchMode="true"
+    tools:context="com.application.fix_it_pagliuca.user.auth.Login">
 
-    <EditText
-        android:layout_centerHorizontal="true"
-        android:id="@+id/emailLogin"
-        android:gravity="center"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="false"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="185dp"
-        android:layout_marginEnd="32dp"
-        android:background="@color/fui_bgTwitter"
-        android:ems="10"
-        android:hint="@string/email"
-        android:importantForAutofill="no"
-        android:inputType="textEmailAddress"
-        android:padding="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+    <LinearLayout
+        style="@style/df_row_vertical"
+        android:layout_height="match_parent"
+        android:weightSum="12"
+        android:baselineAligned="false">
 
-    <EditText
-        android:id="@+id/passwordLogin"
-        android:layout_width="match_parent"
-        android:gravity="center"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/emailLogin"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="50dp"
-        android:layout_marginEnd="32dp"
-        android:background="@color/fui_bgTwitter"
-        android:drawablePadding="16dp"
-        android:ems="10"
-        android:hint="@string/fui_password_hint"
-        android:importantForAutofill="no"
-        android:inputType="textPassword"
-        android:padding="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_weight="6"
+            android:background="@color/df_danger"
+            android:gravity="center"
+            android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/loginText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="65dp"
-        android:text="@string/login"
-        android:textColor="#000000"
-        android:textSize="35sp" />
+            <ImageView
+                android:id="@+id/imageViewLogo"
+                android:layout_width="160dp"
+                android:layout_height="160dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:contentDescription="@string/it_s_a_hammer"
 
-    <ProgressBar
-        android:id="@+id/progressBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/passwordLogin"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
-        android:visibility="invisible" />
+                app:srcCompat="@drawable/ic_login_logo"
+                tools:ignore="VectorDrawableCompat" />
 
-    <Button
-        android:id="@+id/signinBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/passwordLogin"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="75dp"
-        android:text="@string/sign_in" />
+            <TextView
+                style="@style/df_h3"
+                android:layout_width="wrap_content"
+                android:layout_marginTop="1dp"
+                android:fontFamily="sans-serif"
+                android:text="@string/app_name"
+                android:textColor="@color/white"
+                android:textSize="60sp" />
 
-    <Button
-        android:id="@+id/signupActBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/signinBtn"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
-        android:text="@string/signup" />
+        </LinearLayout>
 
-    <TextView
-        android:id="@+id/forgotPsw"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/signupActBtn"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
-        android:text="@string/password_dimenticata" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_weight="6"
+            android:background="@color/formBg"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="20dp">
 
-</RelativeLayout>
+            <LinearLayout
+                android:id="@+id/sendOtpLayout"
+                style="@style/df_row_vertical"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:visibility="visible">
+
+
+                <EditText
+                    android:id="@+id/emailLogin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/email"
+                    android:importantForAutofill="no"
+                    android:inputType="text"
+                    android:singleLine="true"
+                    tools:ignore="TextFields" />
+
+                <EditText
+                    android:id="@+id/passwordLogin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:autofillHints=""
+                    android:hint="@string/password"
+                    android:inputType="textPassword"
+                    android:singleLine="true" />
+
+                <ProgressBar
+                    android:id="@+id/progressBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:visibility="invisible" />
+
+                <Button
+                    android:id="@+id/signinBtn"
+                    style="@style/df4_btn_danger"
+                    android:layout_width="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="20dp"
+                    android:text="@string/log_in" />
+
+                <ProgressBar
+                    android:id="@+id/progressSendingOtp"
+                    style="?android:attr/progressBarStyleLarge"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:indeterminate="true"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/signupActBtn"
+                    style="@style/df_h6"
+                    android:layout_width="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:text="@string/registrati"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/forgotPsw"
+                    style="@style/df_h6"
+                    android:layout_width="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:text="@string/password_dimenticata"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

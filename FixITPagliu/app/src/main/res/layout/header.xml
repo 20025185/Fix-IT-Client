@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="200dp"
-    android:background="@drawable/fui_idp_button_background_email"
+    android:background="@color/colorPrimaryDark"
     android:gravity="bottom"
     android:orientation="vertical"
     android:padding="20dp">
@@ -10,13 +10,16 @@
     <ImageView
         android:layout_width="110dp"
         android:layout_height="110dp"
-        android:src="@drawable/ic_gestione_segnalazioni" />
+        android:layout_marginTop="5dp"
+        android:src="@drawable/ic_dashboard" />
 
     <TextView
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:text="@string/fix_it"
+        android:layout_height="wrap_content"
+        android:text="@string/dashboard_caps"
+        android:layout_marginTop="5dp"
+        android:fontFamily="sans-serif"
         android:textColor="#FFFFFF"
-        android:textSize="30sp" />
+        android:textSize="20sp" />
 
 </LinearLayout>

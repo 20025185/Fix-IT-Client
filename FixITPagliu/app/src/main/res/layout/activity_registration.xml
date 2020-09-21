@@ -1,137 +1,172 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mainLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.fix_it_pagliuca.com.application.fix_it_pagliuca.user.auth.Registration">
+    android:focusableInTouchMode="true"
+    tools:context="com.application.fix_it_pagliuca.user.auth.Login">
+
+    <LinearLayout
+        style="@style/df_row_vertical"
+        android:layout_height="match_parent"
+        android:baselineAligned="false"
+        android:weightSum="12">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_weight="3"
+            android:background="@color/colorPrimaryDark"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/df_h3"
+                android:layout_width="wrap_content"
+                android:layout_marginTop="1dp"
+                android:fontFamily="sans-serif-light"
+                android:text="@string/registrazione_caps"
+                android:textColor="@color/white"
+                android:textSize="50sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_weight="9"
+            android:background="@color/formBg"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="20dp">
+
+            <LinearLayout
+                android:id="@+id/sendOtpLayout"
+                style="@style/df_row_vertical"
+                android:layout_height="match_parent"
+                android:visibility="visible">
+
+                <EditText
+                    android:id="@+id/nomeRegister"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="5dp"
+                    android:ems="10"
+                    android:hint="@string/nome"
+                    android:inputType="textPersonName"
+                    tools:layout_editor_absoluteX="100dp"
+                    tools:layout_editor_absoluteY="191dp" />
+
+                <EditText
+                    android:id="@+id/cognomeRegister"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/nomeRegister"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="5dp"
+                    android:ems="10"
+                    android:hint="@string/cognome"
+                    android:inputType="textPersonName"
+                    tools:layout_editor_absoluteX="100dp"
+                    tools:layout_editor_absoluteY="191dp" />
 
 
+                <EditText
+                    android:id="@+id/Birthday"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/cognomeRegister"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="5dp"
+                    android:clickable="true"
+                    android:editable="false"
+                    android:focusable="true"
+                    android:hint="@string/dd_mm_yyyy" />
+
+                <EditText
+                    android:id="@+id/codiceFiscale"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/Birthday"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="5dp"
+                    android:ems="10"
+                    android:hint="@string/codice_fiscale"
+                    android:inputType="textPersonName"
+                    tools:layout_editor_absoluteX="100dp"
+                    tools:layout_editor_absoluteY="191dp" />
+
+                <EditText
+                    android:id="@+id/emailRegister"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/codiceFiscale"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="5dp"
+                    android:ems="10"
+                    android:hint="@string/email"
+                    android:inputType="textPersonName"
+                    tools:ignore="TextFields"
+                    tools:layout_editor_absoluteX="102dp"
+                    tools:layout_editor_absoluteY="265dp" />
+
+                <EditText
+                    android:id="@+id/username"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/emailRegister"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="5dp"
+                    android:ems="10"
+                    android:hint="@string/username" />
+
+                <EditText
+                    android:id="@+id/pswRegister"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/username"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="5dp"
+                    android:ems="10"
+                    android:hint="@string/password"
+                    android:inputType="textPassword"
+                    tools:layout_editor_absoluteX="100dp"
+                    tools:layout_editor_absoluteY="343dp" />
+
+                <EditText
+                    android:id="@+id/psWConfirm"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/pswRegister"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="5dp"
+                    android:ems="10"
+                    android:hint="@string/confermapsw"
+                    android:inputType="textPassword"
+                    tools:layout_editor_absoluteX="102dp"
+                    tools:layout_editor_absoluteY="414dp" />
+
+                <Button
+                    android:id="@+id/loadImageButton"
+                    style="@style/df4_btn_load"
+                    android:layout_width="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="20dp"
+                    android:text="@string/carica_immagine_del_profilo" />
+
+                <Button
+                    android:id="@+id/signupBtn"
+                    style="@style/df4_btn_danger"
+                    android:layout_width="match_parent"
+                    android:background="@color/colorPrimaryDark"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="20dp"
+                    android:text="@string/registrati" />
 
 
-    <EditText
-        android:id="@+id/nomeRegister"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="25dp"
-        android:ems="10"
-        android:hint="@string/nome"
-        android:inputType="textPersonName"
-        tools:layout_editor_absoluteX="100dp"
-        tools:layout_editor_absoluteY="191dp" />
-
-    <EditText
-        android:id="@+id/cognomeRegister"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/nomeRegister"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="15dp"
-        android:ems="10"
-        android:hint="@string/cognome"
-        android:inputType="textPersonName"
-        tools:layout_editor_absoluteX="100dp"
-        tools:layout_editor_absoluteY="191dp" />
-
-
-    <EditText
-        android:id="@+id/Birthday"
-        android:layout_width="210dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/cognomeRegister"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="15dp"
-        android:clickable="true"
-        android:editable="false"
-        android:hint="@string/dd_mm_yyyy"
-        android:focusable="true" />
-
-    <EditText
-        android:id="@+id/codiceFiscale"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/Birthday"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="15dp"
-        android:ems="10"
-        android:hint="@string/codice_fiscale"
-        android:inputType="textPersonName"
-        tools:layout_editor_absoluteX="100dp"
-        tools:layout_editor_absoluteY="191dp" />
-
-    <EditText
-        android:id="@+id/emailRegister"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/codiceFiscale"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="15dp"
-        android:ems="10"
-        android:hint="@string/email"
-        android:inputType="textPersonName"
-        tools:layout_editor_absoluteX="102dp"
-        tools:layout_editor_absoluteY="265dp"
-        tools:ignore="TextFields" />
-
-    <EditText
-        android:id="@+id/username"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/emailRegister"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="15dp"
-        android:ems="10"
-        android:hint="@string/username" />
-
-    <EditText
-        android:id="@+id/pswRegister"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/username"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="15dp"
-        android:ems="10"
-        android:hint="@string/password"
-        android:inputType="textPassword"
-        tools:layout_editor_absoluteX="100dp"
-        tools:layout_editor_absoluteY="343dp" />
-
-    <EditText
-        android:id="@+id/psWConfirm"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/pswRegister"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="15dp"
-        android:ems="10"
-        android:hint="@string/confermapsw"
-        android:inputType="textPassword"
-        tools:layout_editor_absoluteX="102dp"
-        tools:layout_editor_absoluteY="414dp" />
-
-    <Button
-        android:id="@+id/loadImageButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/psWConfirm"
-        android:textSize="17sp"
-        android:layout_marginTop="15dp"
-        android:layout_centerHorizontal="true"
-        android:hint="@string/carica_immagine_del_profilo" />
-
-    <Button
-        android:id="@+id/signupBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/loadImageButton"
-        android:layout_centerHorizontal="true"
-        android:layout_marginStart="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="30dp"
-        android:textSize="30sp"
-        android:text="@string/confermareg"
-        tools:layout_editor_absoluteX="105dp"
-        tools:layout_editor_absoluteY="514dp" />
-
-
-</RelativeLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

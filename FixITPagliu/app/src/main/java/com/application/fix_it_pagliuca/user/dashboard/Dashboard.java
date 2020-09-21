@@ -19,7 +19,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
 
-import com.application.fix_it_pagliuca.user.extra.LocalStats;
+import com.application.fix_it_pagliuca.user.extra.LocalStatistics;
 import com.application.fix_it_pagliuca.user.extra.Map;
 import com.application.fix_it_pagliuca.user.reports.recycle_view_menus.open_reports_menu.OpenReports;
 import com.example.fix_it_pagliuca.R;
@@ -65,29 +65,42 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
         Button resendCode = findViewById(R.id.resendCode);
         TextView verifyMsg = findViewById(R.id.emailNotVerified);
         drawerLayout = findViewById(R.id.drawer_layout);
-        NavigationView navigationView = findViewById(R.id.nav_view);
-        Toolbar toolbar = findViewById(R.id.toolbar);
 
         fAuth = FirebaseAuth.getInstance();
         FirebaseDatabase rootNode = FirebaseDatabase.getInstance();
         databaseReference = rootNode.getReference("users");
 
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setTitle("");
         setSupportActionBar(toolbar);
-
         navigationView.bringToFront();
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this,
+                drawerLayout,
+                toolbar,
+                R.string.navigation_drawer_open,
+                R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.setCheckedItem(R.id.nav_profile);
 
-        if (!requireNonNull(fAuth.getCurrentUser()).isEmailVerified() && !roleUser.getText().equals("Impiegato")) {
+        if (!requireNonNull(fAuth.getCurrentUser()).isEmailVerified()
+                && !roleUser.getText().equals("Impiegato")) {
             verifyMsg.setVisibility(View.VISIBLE);
             resendCode.setVisibility(View.VISIBLE);
             resendCode.setOnClickListener(view -> fAuth.getCurrentUser()
                     .sendEmailVerification()
-                    .addOnSuccessListener(aVoid -> Toast.makeText(Dashboard.this, "È stata inviata una e-Mail di verifica.", Toast.LENGTH_SHORT).show())
-                    .addOnFailureListener(e -> Toast.makeText(Dashboard.this, "Errore nell'invio della e-Mail.", Toast.LENGTH_SHORT).show()));
+                    .addOnSuccessListener(aVoid -> Toast.makeText(
+                            Dashboard.this,
+                            "È stata inviata una e-Mail di verifica.",
+                            Toast.LENGTH_SHORT).show())
+                    .addOnFailureListener(e -> Toast.makeText(
+                            Dashboard.this,
+                            "Errore nell'invio della e-Mail.",
+                            Toast.LENGTH_SHORT).show()));
         }
 
     }
@@ -126,7 +139,10 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
                 nomeUser.setText(dataSnapshot.child("fullname").getValue(String.class) + " " + dataSnapshot.child("surname").getValue(String.class));
                 fiscalUser.setText(dataSnapshot.child("fiscalCode").getValue(String.class));
                 birthdayUser.setText(dataSnapshot.child("birthday").getValue(String.class));
-                Picasso.get().load(requireNonNull(dataSnapshot.child("imageURL").getValue()).toString()).into(profileImg);
+
+                if (dataSnapshot.child("imageURL").getValue() != null) {
+                    Picasso.get().load(requireNonNull(dataSnapshot.child("imageURL").getValue()).toString()).into(profileImg);
+                }
             }
 
             @Override
@@ -184,7 +200,7 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
 
             case R.id.nav_statsreport:
                 if (currentUser.isEmailVerified()) {
-                    intent = new Intent(Dashboard.this, LocalStats.class);
+                    intent = new Intent(Dashboard.this, LocalStatistics.class);
                     intent.putExtra("UID", currentUser.getUid());
                     startActivity(intent);
                 } else {

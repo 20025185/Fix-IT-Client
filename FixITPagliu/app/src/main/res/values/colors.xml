@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-
     <color name="colorPrimary">#ea474a</color>
     <color name="colorPrimaryDark">#cf2a2d</color>1
     <color name="colorAccent">#1e344b</color>
@@ -9,4 +7,13 @@
     <color name="colorTextSubtitle">#4e4e4e</color>
     <color name="colorTextTitle">#262626</color>
 
+    <color name="df_red">#dc3545</color>
+    <color name="df_danger">#dc3545</color>
+    <color name="df_yellow">#bfbfbf</color>
+
+    <color name="formBg">#f0f0f0</color>
+    <color name="black_alpha_75">#bf000000</color>
+    <color name="white">#ffffffff</color>
+
+    <color name="light_pink" >#ffbcb8</color>
 </resources>

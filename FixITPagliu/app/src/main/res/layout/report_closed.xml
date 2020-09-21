@@ -5,9 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_centerHorizontal="true"
-    android:layout_marginLeft="10dp"
-    android:layout_marginTop="20dp"
-    android:layout_marginRight="10dp"
+    android:layout_marginLeft="3dp"
+    android:layout_marginTop="10dp"
+    android:layout_marginRight="3dp"
     android:layout_marginBottom="10dp"
     android:background="@drawable/bg_oreport"
     android:orientation="vertical">
@@ -68,7 +68,7 @@
         android:text="@string/undefined"
         app:layout_constraintLeft_toLeftOf="@id/repID"
         app:layout_constraintTop_toBottomOf="@id/repDesc"
-        />
+        tools:ignore="RtlHardcoded" />
 
     <Button
         android:id="@+id/repVote"
@@ -90,7 +90,7 @@
         android:layout_marginLeft="260dp"
         android:layout_marginEnd="20dp"
         android:layout_marginRight="20dp"
-        android:text="Riapri\nSegnalazione"
+        android:text="@string/riapri_nsegnalazione"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/repVote" />
 
