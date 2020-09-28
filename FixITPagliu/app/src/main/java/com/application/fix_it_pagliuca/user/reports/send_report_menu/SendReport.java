@@ -133,7 +133,7 @@ public class SendReport extends AppCompatActivity implements PopupMenu.OnMenuIte
                     socialDiffusion,
                     descriptionEdit.getText().toString(),
                     tipoSegnalazione,
-                    attachmentUUID);
+                    fileURI.toString());
             assert repId != null;
 
             System.out.println(pendingReport.toString());
@@ -288,7 +288,7 @@ public class SendReport extends AppCompatActivity implements PopupMenu.OnMenuIte
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Seleziona l'allegatol"), 8777);
+        startActivityForResult(Intent.createChooser(intent, "Seleziona l'allegato"), 8777);
     }
 
     @Override
@@ -310,9 +310,7 @@ public class SendReport extends AppCompatActivity implements PopupMenu.OnMenuIte
                         .addOnSuccessListener(taskSnapshot -> {
                             storageReference
                                     .getDownloadUrl()
-                                    .addOnSuccessListener(uri -> {
-                                        fileURI = uri;
-                                    });
+                                    .addOnSuccessListener(uri -> fileURI = uri);
                             progressDialog.dismiss();
                             Toast.makeText(SendReport.this, "Allegato caricato con successo", Toast.LENGTH_SHORT).show();
                         })

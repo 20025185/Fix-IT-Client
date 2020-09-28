@@ -4,7 +4,6 @@ import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.SearchView;
 import android.widget.Toast;
 
@@ -37,10 +36,8 @@ public class LocalStatistics extends AppCompatActivity {
     private SearchView searchView;
     private LineChart lineChart;
     private DatabaseReference dbr = FirebaseDatabase.getInstance().getReference("reports");
-    private LineDataSet lineDataSet;
-    //  Le TreeMap sono sempre ordinate in base al valore delle chiavi, in questo caso la data del Report.
-    private TreeMap<String, Integer> data;
-    List<Address> addresses = null;
+    private TreeMap<String, Integer> data;    //  Le TreeMap sono sempre ordinate in base al valore delle chiavi, in questo caso la data del Report.
+    private List<Address> addresses = null;
     private ArrayList<String> dates = new ArrayList<>();
 
     @Override
@@ -51,17 +48,10 @@ public class LocalStatistics extends AppCompatActivity {
         lineChart = findViewById(R.id.lineChart);
         searchView = findViewById(R.id.svLocation);
 
+        Toast.makeText(this, "Cercare la località desiderata.", Toast.LENGTH_SHORT).show();
+        
         data = new TreeMap<>();
-
         searchListeners();
-
-        lineDataSet = new LineDataSet(updateGraph(), "Data set 1");
-        ArrayList<ILineDataSet> dataSets = new ArrayList<>();
-        dataSets.add(lineDataSet);
-
-        LineData data = new LineData(dataSets);
-        lineChart.setData(data);
-        lineChart.invalidate();
     }
 
     private void searchListeners() {
@@ -87,7 +77,6 @@ public class LocalStatistics extends AppCompatActivity {
                                     e.printStackTrace();
                                 }
 
-
                                 if (addresses.size() != 0) {
                                     if (addresses.toString().toLowerCase().contains(query.toLowerCase())) {
                                         //  Controllo nella TreeMap se sia presente la chiave del report che contiene la query
@@ -103,32 +92,8 @@ public class LocalStatistics extends AppCompatActivity {
                                     }
                                 }
 
+                                updateGraph(query);
 
-                                //  Impostazioni per capire il grafo
-                                String place = Character.isUpperCase(query.charAt(0)) + query.substring(1);
-
-                                lineDataSet = new LineDataSet(updateGraph(), "Segnalazione per " + place);
-                                lineDataSet.setColor(Color.RED);
-                                ArrayList<ILineDataSet> dataSets = new ArrayList<>();
-                                dataSets.add(lineDataSet);
-
-                                LineData data = new LineData(dataSets);
-                                lineChart.setScaleMinima(1.5f, 1.5f);
-                                lineChart.getAxisLeft().setAxisMinimum(0.0f);
-                                lineChart.getAxisLeft().setGranularity(1.0f);
-                                lineChart.getAxisLeft().setAxisMaximum(10.0f);
-
-                                lineChart.getAxisRight().setAxisMinimum(0.0f);
-                                lineChart.getAxisRight().setGranularity(1.0f);
-                                lineChart.getAxisRight().setAxisMaximum(10.0f);
-
-                                lineChart.getXAxis().setGranularity(1.0f);
-                                lineChart.getXAxis().setAxisMaximum(10.0f);
-                                lineChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(dates));
-
-
-                                lineChart.setData(data);
-                                lineChart.invalidate();
                             }
                         }
 
@@ -150,13 +115,42 @@ public class LocalStatistics extends AppCompatActivity {
         });
     }
 
-    public ArrayList<Entry> updateGraph() {
+    private void updateGraph(String query) {
+        String place = Character.toUpperCase(query.charAt(0)) + query.substring(1);
+
+        LineDataSet lineDataSet = new LineDataSet(loadDataOnList(), "Segnalazione per " + place);
+        lineDataSet.setColor(Color.RED);
+        ArrayList<ILineDataSet> dataSets = new ArrayList<>();
+        dataSets.add(lineDataSet);
+
+        LineData data = new LineData(dataSets);
+        lineChart.setScaleMinima(1.5f, 1.5f);
+        lineChart.getAxisLeft().setAxisMinimum(0.0f);
+        lineChart.getAxisLeft().setGranularity(1.0f);
+        lineChart.getAxisLeft().setAxisMaximum(10.0f);
+
+        lineChart.getAxisRight().setAxisMinimum(0.0f);
+        lineChart.getAxisRight().setGranularity(1.0f);
+        lineChart.getAxisRight().setAxisMaximum(10.0f);
+
+        lineChart.getXAxis().setGranularity(1.0f);
+        lineChart.getXAxis().setAxisMaximum(10.0f);
+        lineChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(dates));
+
+        lineChart.setData(data);
+        lineChart.invalidate();
+    }
+
+
+    private ArrayList<Entry> loadDataOnList() {
         ArrayList<Entry> datVals = new ArrayList<>();
         int index = 0;
+
         for (final TreeMap.Entry<String, Integer> entry : data.entrySet()) {
             datVals.add(new Entry(index++, entry.getValue()));
             dates.add(entry.getKey());
         }
+
         return datVals;
     }
 

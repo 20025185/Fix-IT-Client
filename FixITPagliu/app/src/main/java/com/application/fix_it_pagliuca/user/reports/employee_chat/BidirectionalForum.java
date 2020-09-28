@@ -38,6 +38,7 @@ public class BidirectionalForum extends AppCompatActivity {
     private String repID;
     private int msgIndex = 0;
     private ArrayList<Messages> messageList;
+    private String userID, userFullname;
 
     private MessageAdapter messageAdapter;
     private FirebaseUser firebaseUser;
@@ -64,6 +65,20 @@ public class BidirectionalForum extends AppCompatActivity {
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setHasFixedSize(true);
 
+        //  Retrieve name
+        databaseReference = FirebaseDatabase.getInstance().getReference("users").child(userID);
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                userFullname = snapshot.child("fullname").getValue().toString();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
         //  Firebase
         databaseReference = FirebaseDatabase.getInstance().getReference()
                 .child("reports")
@@ -89,6 +104,7 @@ public class BidirectionalForum extends AppCompatActivity {
 
     private void getDataFromFirebase() {
         Query query = databaseReference;
+
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -98,7 +114,7 @@ public class BidirectionalForum extends AppCompatActivity {
                     message.setMsg(Objects.requireNonNull(snapshot.child("msg_" + i).getValue()).toString());
                     messageList.add(message);
                 }
-                messageAdapter = new MessageAdapter(getApplicationContext(), messageList);
+                messageAdapter = new MessageAdapter(getApplicationContext(), messageList, userFullname);
                 recyclerView.setAdapter(messageAdapter);
                 messageAdapter.notifyDataSetChanged();
             }
@@ -163,8 +179,7 @@ public class BidirectionalForum extends AppCompatActivity {
                 getDataFromFirebase();
             }, 600);
         } else {
-            Toast.makeText(BidirectionalForum.this,
-                    "Non è stato inviato nulla", Toast.LENGTH_SHORT).show();
+            Toast.makeText(BidirectionalForum.this, "Non è stato inviato nulla", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -172,6 +187,7 @@ public class BidirectionalForum extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             repID = extras.getString("REP_ID");
+            userID = extras.getString("USER_ID");
         } else {
             repID = null;
         }

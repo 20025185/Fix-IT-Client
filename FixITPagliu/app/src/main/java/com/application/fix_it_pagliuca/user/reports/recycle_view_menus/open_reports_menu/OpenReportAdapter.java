@@ -21,9 +21,11 @@ import com.firebase.ui.database.FirebaseRecyclerOptions;
 
 public class OpenReportAdapter extends FirebaseRecyclerAdapter<RecycleReportItem, OpenReportAdapter.ReportViewHolder> {
     Context oldInstance;
+    String uid;
 
-    public OpenReportAdapter(@NonNull FirebaseRecyclerOptions<RecycleReportItem> options) {
+    public OpenReportAdapter(@NonNull FirebaseRecyclerOptions<RecycleReportItem> options, String userID) {
         super(options);
+        uid = userID;
     }
 
     public void setInstance(Context instance) {
@@ -53,6 +55,7 @@ public class OpenReportAdapter extends FirebaseRecyclerAdapter<RecycleReportItem
             Intent intent = new Intent(oldInstance, BidirectionalForum.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             intent.putExtra("REP_ID", report.getId());
+            intent.putExtra("USER_ID", uid);
             oldInstance.startActivities(new Intent[]{intent});
         });
     }

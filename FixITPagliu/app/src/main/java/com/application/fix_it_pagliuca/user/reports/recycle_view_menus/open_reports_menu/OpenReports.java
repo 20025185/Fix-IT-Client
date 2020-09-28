@@ -48,7 +48,7 @@ public class OpenReports extends AppCompatActivity {
                                 .orderByChild("status").equalTo("Aperta_" + userID), RecycleReportItem.class)
                         .build();
 
-        openReportAdapter = new OpenReportAdapter(options);
+        openReportAdapter = new OpenReportAdapter(options, userID);
         openReportAdapter.setInstance(getBaseContext());
 
         recyclerView.setAdapter(openReportAdapter);
